@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media Pembelajaran Matematika Kelas 5 - FPB (Faktor Persekutuan Terbesar)</title>
+<meta name="description" content="Media pembelajaran interaktif berbasis web untuk matematika kelas 5 SD dengan topik FPB: materi, alat bantu, latihan soal, dan permainan.">
+<style>
+/* ============================================================
+   TOKEN DESAIN
+   ============================================================ */
+:root{
+  --navy:#0f3552;
+  --navy-2:#164a6e;
+  --blue:#1b7fb8;
+  --teal:#0e9488;
+  --amber:#f0a441;
+  --coral:#e05f5a;
+  --lime:#4faa3b;
+  --violet:#6b53c4;
+
+  --paper:#f2f6fa;
+  --card:#ffffff;
+  --ink:#132b3d;
+  --muted:#5a7488;
+  --line:#dbe6ef;
+  --line-2:#eef4f9;
+
+  --ok:#2c8a4f;
+  --ok-bg:#e8f6ed;
+  --bad:#c14b46;
+  --bad-bg:#fdeeec;
+  --warn:#9b6a10;
+  --warn-bg:#fdf3e0;
+
+  --r-s:8px;
+  --r-m:14px;
+  --r-l:22px;
+  --shadow:0 1px 2px rgba(15,53,82,.06), 0 10px 30px -14px rgba(15,53,82,.22);
+  --shadow-s:0 1px 2px rgba(15,53,82,.08);
+  --sans:ui-rounded,"Nunito","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:
+    radial-gradient(1100px 520px at 8% -8%, #e3f0fa 0%, rgba(227,240,250,0) 60%),
+    radial-gradient(900px 500px at 100% 0%, #e9f7f2 0%, rgba(233,247,242,0) 55%),
+    var(--paper);
+  line-height:1.62;
+  font-size:16px;
+}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .45em;font-weight:800;letter-spacing:-.01em}
+h1{font-size:clamp(1.75rem,4.6vw,2.6rem)}
+h2{font-size:clamp(1.3rem,2.7vw,1.6rem)}
+h3{font-size:1.08rem}
+p{margin:0 0 .9em}
+ul,ol{margin:0 0 .9em;padding-left:1.35em}
+li{margin:.28em 0}
+b,strong{font-weight:800}
+small{font-size:.85rem}
+sup{font-size:.68em;vertical-align:super}
+code,.mono{font-family:var(--mono);font-size:.95em}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:4px}
+
+/* ============================================================
+   TOPBAR + NAVIGASI BAB
+   ============================================================ */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:linear-gradient(100deg,var(--navy) 0%,var(--navy-2) 55%,#1a6d8f 100%);
+  color:#eaf3fa;
+  box-shadow:0 6px 22px -12px rgba(9,33,52,.7);
+}
+.topbar-in{
+  max-width:1120px;margin:0 auto;padding:.7rem clamp(.9rem,3vw,1.4rem) .55rem;
+  display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:.65rem;min-width:0}
+.brand-mark{
+  width:40px;height:40px;flex:0 0 40px;border-radius:12px;
+  background:linear-gradient(150deg,var(--amber),#e7863a);
+  display:grid;place-items:center;color:#20344a;font-weight:900;font-size:.95rem;
+  letter-spacing:-.5px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);
+}
+.brand-txt{min-width:0}
+.brand-txt b{display:block;font-size:.95rem;line-height:1.2;color:#fff}
+.brand-txt span{display:block;font-size:.72rem;color:#a9cbe2;line-height:1.35}
+.top-meta{margin-left:auto;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.pill{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:#eaf3fa;border-radius:999px;padding:.25rem .7rem;font-size:.74rem;font-weight:700;
+}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--amber)}
+#overallBar{
+  height:6px;width:130px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden;
+}
+#overallBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7fe0c4,var(--amber));transition:width .4s ease}
+
+.chapnav{
+  position:sticky;top:0;z-index:59;
+  background:rgba(255,255,255,.93);
+  backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.chapnav-in{
+  max-width:1120px;margin:0 auto;padding:.5rem clamp(.9rem,3vw,1.4rem);
+  display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:thin;
+}
+.chapbtn{
+  flex:0 0 auto;display:flex;align-items:center;gap:.5rem;
+  border:1px solid var(--line);background:#fff;color:var(--muted);
+  padding:.42rem .8rem;border-radius:999px;font:inherit;font-size:.83rem;font-weight:700;
+  cursor:pointer;transition:.18s ease;
+}
+.chapbtn .num{
+  width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  background:#e7eff6;color:var(--navy);font-size:.7rem;font-weight:900;
+}
+.chapbtn:hover{border-color:var(--blue);color:var(--navy);transform:translateY(-1px)}
+.chapbtn[aria-current="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.chapbtn[aria-current="true"] .num{background:var(--amber);color:#20344a}
+.chapbtn.done .num{background:var(--teal);color:#fff}
+
+/* ============================================================
+   LAYOUT UMUM
+   ============================================================ */
+main{max-width:1120px;margin:0 auto;padding:1.35rem clamp(.9rem,3vw,1.4rem) 3rem}
+.chapter{display:none}
+.chapter.active{display:block;animation:rise .35s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-m);
+  box-shadow:var(--shadow);padding:clamp(1rem,2.4vw,1.45rem);margin-bottom:1.05rem;
+}
+.card.tight{padding:clamp(.85rem,2vw,1.1rem)}
+.grid{display:grid;gap:1.05rem}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:880px){.g2,.g3{grid-template-columns:1fr}}
+
+.chap-head{margin:0 0 1.05rem}
+.eyebrow{
+  display:inline-block;font-size:.72rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--teal);background:#e6f6f3;border:1px solid #c9ece5;padding:.15rem .6rem;border-radius:999px;margin-bottom:.55rem;
+}
+.lead{font-size:1.03rem;color:#2e4a5e;max-width:66ch}
+
+.callout{
+  border:1px solid var(--line);border-left:5px solid var(--blue);
+  background:#f4f9fd;border-radius:var(--r-s);padding:.85rem 1rem;margin:0 0 1rem;
+}
+.callout.tip{border-left-color:var(--lime);background:#f1f9ec}
+.callout.warn{border-left-color:var(--amber);background:var(--warn-bg)}
+.callout.def{border-left-color:var(--violet);background:#f4f1fd}
+.callout h4{margin:0 0 .25rem;font-size:.95rem}
+.callout p:last-child{margin-bottom:0}
+.callout .tag{font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem}
+
+/* ============================================================
+   TOMBOL / INPUT
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+  font:inherit;font-weight:800;font-size:.9rem;
+  border:1px solid var(--navy);background:var(--navy);color:#fff;
+  padding:.58rem 1.05rem;border-radius:999px;cursor:pointer;transition:.16s ease;
+  text-decoration:none;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px -10px rgba(15,53,82,.75)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:#fff;color:var(--navy);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--blue)}
+.btn.amber{background:var(--amber);border-color:#d98c28;color:#26364a}
+.btn.soft{background:#eaf3fa;border-color:#cfe4f2;color:var(--navy)}
+.btn.sm{padding:.34rem .72rem;font-size:.8rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btnrow{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
+.field{display:flex;flex-direction:column;gap:.25rem}
+.field label{font-size:.78rem;font-weight:800;color:var(--muted);letter-spacing:.02em}
+input[type=number],input[type=text],select{
+  font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);
+  border-radius:var(--r-s);padding:.5rem .65rem;min-width:0;width:100%;
+}
+input[type=number]{font-family:var(--mono);font-weight:700}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,127,184,.15);outline:none}
+.controls{display:flex;gap:.7rem;align-items:flex-end;flex-wrap:wrap}
+.controls .field{width:106px}
+.controls .field.wide{width:auto;flex:1 1 210px}
+.hint{font-size:.78rem;color:var(--muted)}
+
+/* ============================================================
+   KOMPONEN MATEMATIKA
+   ============================================================ */
+.chip{
+  display:inline-grid;place-items:center;min-width:38px;padding:.28rem .5rem;
+  border:1px solid var(--line);border-radius:10px;background:#fff;
+  font-family:var(--mono);font-weight:700;font-size:.92rem;
+  animation:pop .3s ease both;
+}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip.shared{background:#fff6e8;border-color:#f0c98a;color:#7a5210}
+.chip.max{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 6px 14px -8px rgba(15,53,82,.9)}
+.chip.leaf{background:#e9f7f1;border-color:#b8e3d1;color:#186045}
+@keyframes pop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:none}}
+
+.eqbox{
+  font-family:var(--mono);font-size:1rem;background:#f7fafc;border:1px dashed var(--line);
+  border-radius:var(--r-s);padding:.7rem .85rem;overflow-x:auto;white-space:nowrap;
+}
+.result-hero{
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  background:linear-gradient(120deg,#0f3552,#164a6e 60%,#1a7d94);color:#fff;
+  border-radius:var(--r-m);padding:1rem 1.15rem;box-shadow:var(--shadow);
+}
+.result-hero .big{font-size:2.4rem;font-weight:900;line-height:1;font-family:var(--mono)}
+.result-hero .lbl{font-size:.74rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#9fcbe6}
+.result-hero .sub{font-size:.86rem;color:#d7e9f6}
+.result-hero .sep{width:1px;align-self:stretch;background:rgba(255,255,255,.22)}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-s)}
+table.math{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:.92rem;background:#fff}
+table.math th,table.math td{padding:.42rem .7rem;border-bottom:1px solid var(--line-2);text-align:center}
+table.math th{background:#f0f6fb;color:var(--navy);font-family:var(--sans);font-size:.76rem;letter-spacing:.04em;text-transform:uppercase}
+table.math tbody tr:last-child td{border-bottom:0}
+table.math td.hl{background:#fff6e8;font-weight:800;color:#7a5210}
+table.math td.div{background:#eef8f3;font-weight:800;color:#186045}
+
+.tree{font-family:var(--mono);font-size:.9rem;line-height:1.75;background:#f7fafc;border:1px solid var(--line);border-radius:var(--r-s);padding:.7rem .85rem;overflow-x:auto;white-space:pre}
+.tree .pk{color:var(--teal);font-weight:800}
+
+.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-top:.5rem}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:.35rem;vertical-align:-1px}
+.legend .i-shared{background:#f0c98a}
+.legend .i-max{background:var(--navy)}
+.legend .i-plain{background:#fff;border:1px solid var(--line)}
+
+.factorrow{display:grid;grid-template-columns:minmax(120px,170px) 1fr;gap:.75rem;align-items:start;padding:.6rem 0;border-top:1px solid var(--line-2)}
+.factorrow:first-of-type{border-top:0}
+.factorrow .ttl{font-weight:900;color:var(--navy)}
+.factorrow .ttl small{display:block;font-weight:700;color:var(--muted)}
+
+/* ============================================================
+   VISUAL KELAS / OBJEK
+   ============================================================ */
+.objfield{display:flex;flex-wrap:wrap;gap:.28rem;max-width:340px}
+.obj{width:15px;height:15px;border-radius:4px;background:var(--blue);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.obj.b{background:var(--coral);border-radius:50%}
+.bags{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:.6rem}
+.bag{
+  border:1px solid var(--line);border-radius:var(--r-m);padding:.55rem .6rem;background:#fff;
+  box-shadow:var(--shadow-s);animation:rise .3s ease both;
+}
+.bag h5{margin:0 0 .3rem;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:900}
+.bag .num{font-family:var(--mono);font-weight:800;font-size:.9rem}
+.bag.bad{border-color:#f0b9b5;background:#fdf3f2}
+.bag.good{border-color:#b8e3d1;background:#f2fbf6}
+.ruler{display:flex;flex-wrap:wrap;gap:.22rem;margin-top:.28rem}
+.ruler span{width:11px;height:11px;border-radius:3px;background:var(--blue)}
+.ruler span.left{background:var(--coral);border-radius:50%}
+.ruler span.void{background:#eef4f9;box-shadow:inset 0 0 0 1px #e0ebf4}
+
+/* ============================================================
+   KUIS
+   ============================================================ */
+.quiz-top{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;margin-bottom:.9rem}
+.meter{flex:1 1 180px;min-width:140px;height:9px;background:#e7eff6;border-radius:999px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--amber));transition:width .35s ease}
+.scorechip{
+  font-weight:900;font-size:.85rem;color:var(--navy);background:#eaf3fa;border:1px solid #cfe4f2;
+  border-radius:999px;padding:.28rem .8rem;
+}
+.qcard{border:1px solid var(--line);border-radius:var(--r-m);padding:1rem;background:#fff;box-shadow:var(--shadow-s)}
+.qnum{font-size:.74rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+.qtext{font-size:1.06rem;font-weight:800;margin:.3rem 0 .9rem}
+.opts{display:grid;gap:.5rem}
+.opt{
+  display:flex;align-items:center;gap:.7rem;text-align:left;width:100%;
+  font:inherit;font-weight:700;color:var(--ink);cursor:pointer;
+  background:#fff;border:1.5px solid var(--line);border-radius:var(--r-s);padding:.62rem .8rem;transition:.15s ease;
+}
+.opt:hover:not(:disabled){border-color:var(--blue);background:#f7fbfe;transform:translateX(2px)}
+.opt .key{
+  width:26px;height:26px;flex:0 0 26px;border-radius:8px;display:grid;place-items:center;
+  background:#eef4f9;color:var(--navy);font-size:.8rem;font-weight:900;
+}
+.opt .val{font-family:var(--mono)}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.right .key{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt.wrong .key{background:var(--bad);color:#fff}
+.opt:disabled{cursor:default;opacity:.95}
+.fb{margin-top:.85rem;border-radius:var(--r-s);padding:.75rem .9rem;border:1px solid var(--line);display:none}
+.fb.show{display:block;animation:rise .25s ease both}
+.fb.ok{background:var(--ok-bg);border-color:#bfe5cc}
+.fb.no{background:var(--bad-bg);border-color:#f2c6c2}
+.fb .verdict{font-weight:900;margin-bottom:.2rem}
+.fb.ok .verdict{color:var(--ok)}
+.fb.no .verdict{color:var(--bad)}
+.fb p{margin:0;font-size:.93rem;color:#31485a}
+.review{display:grid;gap:.55rem}
+.review .ritem{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:var(--r-s);padding:.6rem .75rem;font-size:.92rem;background:#fbfdfe}
+.review .ritem.hit{border-left-color:var(--ok)}
+.review .ritem.miss{border-left-color:var(--bad)}
+.review .ritem b{display:block}
+.final{
+  text-align:center;padding:1.3rem 1rem;border-radius:var(--r-m);
+  background:linear-gradient(140deg,#0f3552,#1a6d8f);color:#fff;
+}
+.final .grade{font-size:1.6rem;font-weight:900;margin:.15rem 0 .35rem}
+.final .desc{color:#cfe5f3;font-size:.93rem}
+
+/* ============================================================
+   LAIN-LAIN
+   ============================================================ */
+.steps{counter-reset:st;display:grid;gap:.55rem;margin:0;padding:0;list-style:none}
+.steps li{
+  counter-increment:st;display:flex;gap:.7rem;align-items:flex-start;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-s);padding:.6rem .8rem;
+}
+.steps li::before{
+  content:counter(st);flex:0 0 24px;width:24px;height:24px;border-radius:50%;
+  background:var(--navy);color:#fff;display:grid;place-items:center;font-size:.78rem;font-weight:900;
+}
+.steps li b{color:var(--navy)}
+.navfoot{display:flex;justify-content:space-between;gap:.7rem;align-items:center;margin-top:1.3rem;padding-top:1rem;border-top:1px solid var(--line)}
+.pager{display:grid;gap:.85rem}
+.pager .card{margin:0}
+.dl{display:grid;grid-template-columns:150px 1fr;gap:.35rem .8rem;font-size:.94rem}
+.dl dt{font-weight:900;color:var(--navy)}
+.dl dd{margin:0;color:#33505f}
+@media (max-width:620px){.dl{grid-template-columns:1fr}.dl dt{margin-top:.4rem}}
+.rate{display:flex;gap:.35rem;flex-wrap:wrap}
+.rate button{
+  font:inherit;font-size:.8rem;font-weight:800;color:var(--muted);cursor:pointer;
+  background:#fff;border:1px solid var(--line);border-radius:999px;padding:.3rem .7rem;transition:.15s;
+}
+.rate button:hover{border-color:var(--blue)}
+.rate button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.rateitem{padding:.7rem 0;border-top:1px solid var(--line-2)}
+.rateitem:first-child{border-top:0}
+.rateitem p{margin:0 0 .35rem;font-weight:700}
+footer.site{
+  border-top:1px solid var(--line);background:#fff;
+  font-size:.84rem;color:var(--muted);
+}
+footer.site .in{max-width:1120px;margin:0 auto;padding:1rem clamp(.9rem,3vw,1.4rem);display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}
+kbd{
+  font-family:var(--mono);font-size:.8em;background:#eef4f9;border:1px solid var(--line);
+  border-bottom-width:2px;border-radius:5px;padding:.05rem .35rem;color:var(--navy)
+}
+
+/* ============================================================
+   CETAK
+   ============================================================ */
+@media print{
+  .topbar,.chapnav,.btn,.controls,.no-print,footer.site{display:none !important}
+  body{background:#fff;font-size:11.5pt}
+  .chapter{display:block !important;break-inside:avoid;margin-bottom:1.4rem}
+  .card{box-shadow:none;break-inside:avoid}
+  main{padding:0;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s !important;transition-duration:.001s !important}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">FPB</div>
+      <div class="brand-txt">
+        <b>Matematika Kelas 5 - Faktor Persekutuan Terbesar</b>
+        <span>Media pembelajaran interaktif - Kurikulum Merdeka / K-13</span>
+      </div>
+    </div>
+    <div class="top-meta">
+      <span class="pill"><span class="dot"></span><span id="chapCount">Bab 1 / 8</span></span>
+      <span class="pill" title="Kemajuan menjelajah bab">Progres <span id="overallPct">0%</span></span>
+      <span id="overallBar" role="progressbar" aria-label="Progres belajar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></span>
+    </div>
+  </div>
+</header>
+
+<nav class="chapnav" aria-label="Daftar bab pembelajaran">
+  <div class="chapnav-in" id="chapNav"></div>
+</nav>
+
+<main id="main">
+
+<!-- ============================ BAB 1 : BERANDA ============================ -->
+<section class="chapter" id="ch1" data-title="Beranda" data-nav="Beranda">
+  <div class="card" style="background:linear-gradient(140deg,#0f3552,#164a6e 58%,#1a7d94);color:#eaf3fa;border:0">
+    <span class="eyebrow" style="background:rgba(255,255,255,.14);color:#a9e6d8;border-color:rgba(255,255,255,.18)">Bab 1 - Pengantar</span>
+    <h1 style="color:#fff">FPB: Membagi Sesuatu Menjadi Kelompok yang Sama Besar</h1>
+    <p class="lead" style="color:#d3e6f3">Kita sering menghadapi masalah seperti ini: 24 buku dan 36 pensil akan dibagikan ke beberapa kantong hadiah. Setiap kantong harus berisi sama banyak, dan tidak boleh ada sisa. Berapa paling banyak kantong yang bisa disiapkan? Jawabannya adalah <b style="color:#fff">FPB</b> dari 24 dan 36.</p>
+    <div class="btnrow no-print">
+      <button class="btn amber" data-go="2">Mulai Belajar</button>
+      <button class="btn ghost" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.28);color:#fff" data-go="6">Langsung ke Latihan Soal</button>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h2>Tujuan Pembelajaran</h2>
+      <p class="hint" style="margin-bottom:.7rem">Setelah menyelesaikan modul ini, kamu mampu:</p>
+      <ul class="steps">
+        <li><span>Menjelaskan pengertian <b>faktor</b> dan <b>faktor persekutuan</b> suatu bilangan.</span></li>
+        <li><span>Menentukan <b>FPB</b> dua bilangan dengan cara mendaftar faktor.</span></li>
+        <li><span>Menentukan <b>FPB</b> dua atau tiga bilangan dengan <b>faktorisasi prima</b> dan tabel pembagian.</span></li>
+        <li><span>Menyelesaikan <b>soal cerita</b> sehari-hari yang berkaitan dengan FPB.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Peta Konsep</h2>
+      <svg viewBox="0 0 460 230" width="100%" height="auto" role="img" aria-label="Peta konsep: pembagian membawa faktor, faktor persekutuan membawa FPB, diterapkan pada soal cerita">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="#5a7488"></path>
+          </marker>
+        </defs>
+        <style>
+          .bx{fill:#fff;stroke:#1b7fb8;stroke-width:1.6}
+          .bx2{fill:#f4f1fd;stroke:#6b53c4;stroke-width:1.6}
+          .bx3{fill:#f1f9ec;stroke:#4faa3b;stroke-width:1.6}
+          .ct{font:700 13px var(--sans,sans-serif);fill:#132b3d}
+          .cs{font:600 10.5px var(--sans,sans-serif);fill:#5a7488}
+          .ln{stroke:#5a7488;stroke-width:1.4;fill:none}
+        </style>
+        <rect class="bx" x="8" y="18" width="132" height="52" rx="12"></rect>
+        <text class="ct" x="74" y="40" text-anchor="middle">Bilangan</text>
+        <text class="cs" x="74" y="56" text-anchor="middle">contoh: 24 dan 36</text>
+
+        <rect class="bx" x="176" y="18" width="120" height="52" rx="12"></rect>
+        <text class="ct" x="236" y="40" text-anchor="middle">Faktor</text>
+        <text class="cs" x="236" y="56" text-anchor="middle">pembagi habis</text>
+
+        <rect class="bx2" x="176" y="96" width="120" height="52" rx="12"></rect>
+        <text class="ct" x="236" y="118" text-anchor="middle">Faktor</text>
+        <text class="ct" x="236" y="134" text-anchor="middle">Persekutuan</text>
+
+        <rect class="bx3" x="176" y="172" width="120" height="44" rx="12"></rect>
+        <text class="ct" x="236" y="199" text-anchor="middle">FPB (terbesar)</text>
+
+        <rect class="bx3" x="322" y="172" width="130" height="44" rx="12"></rect>
+        <text class="ct" x="387" y="192" text-anchor="middle">Soal Cerita</text>
+        <text class="cs" x="387" y="206" text-anchor="middle">membagi kelompok</text>
+
+        <path class="ln" d="M140 44 H172" marker-end="url(#ar)"></path>
+        <path class="ln" d="M236 70 V92" marker-end="url(#ar)"></path>
+        <path class="ln" d="M236 148 V168" marker-end="url(#ar)"></path>
+        <path class="ln" d="M296 194 H318" marker-end="url(#ar)"></path>
+        <path class="ln" d="M296 122 C360 122 387 130 387 168" marker-end="url(#ar)"></path>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Cara Menggunakan Modul Ini</h2>
+    <div class="grid g3">
+      <div><h3>1. Telusuri bab berurutan</h3><p class="hint">Gunakan tombol <b>Lanjut</b> di bawah setiap bab, atau klik nama bab pada menu di bagian atas halaman. Progres kamu dipantau otomatis.</p></div>
+      <div><h3>2. Coba setiap alat</h3><p class="hint">Kotak berwarna memiliki alat interaktif: ganti angkanya, lalu amati apa yang terjadi. Belajar akan lebih melekat kalau kamu mencoba.</p></div>
+      <div><h3>3. Ukur pemahamanmu</h3><p class="hint">Kerjakan bab 6 (Latihan) dan bab 7 (Permainan). Nilai minimal <b>70</b> dianggap tuntas pada topik FPB.</p></div>
+    </div>
+    <div class="callout tip" style="margin-top:1rem;margin-bottom:0">
+      <h4>Pintasan papan ketik</h4>
+      <p>Tekan <kbd>Alt</kbd> + <kbd>&rarr;</kbd> untuk bab berikutnya, <kbd>Alt</kbd> + <kbd>&larr;</kbd> untuk bab sebelumnya.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BAB 2 : FAKTOR BILANGAN ============================ -->
+<section class="chapter" id="ch2" data-title="Faktor Bilangan" data-nav="Faktor Bilangan">
+  <div class="chap-head">
+    <span class="eyebrow">Bab 2 - Konsep Dasar</span>
+    <h1>Faktor Bilangan</h1>
+    <p class="lead">Sebelum mencari FPB, kita harus sangat paham dulu apa itu <b>faktor</b>. Semua dimulai dari pembagian habis.</p>
+  </div>
+
+  <div class="callout def">
+    <span class="tag">Definisi</span>
+    <p><b>Faktor</b> suatu bilangan adalah bilangan asli yang dapat membagi bilangan tersebut <b>tanpa sisa</b>.</p>
+    <p style="margin:0">Contoh: 30 dibagi 5 hasilnya 6, sisa 0. Berarti <b>5 adalah faktor dari 30</b>. Sedangkan 30 dibagi 4 hasilnya 7 sisa 2, jadi <b>4 bukan faktor dari 30</b>.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h2>Ciri-ciri faktor yang perlu diingat</h2>
+      <ul class="steps">
+        <li><span>Faktor terkecil selalu <b>1</b>, faktor terbesar selalu <b>bilangan itu sendiri</b>.</span></li>
+        <li><span>Faktor selalu lebih kecil atau sama dengan bilangannya. Tidak ada faktor yang lebih besar dari bilangannya.</span></li>
+        <li><span>Faktor selalu muncul <b>berpasangan</b>: jika <span class="mono">a &times; b = n</span>, maka a dan b keduanya faktor dari n.</span></li>
+        <li><span>Jumlah faktor selalu <b>terbatas</b> (berbeda dengan kelipatan yang tak terhingga).</span></li>
+      </ul>
+      <div class="callout warn" style="margin-bottom:0">
+        <h4>Keliru yang sering terjadi</h4>
+        <p style="margin:0">Banyak siswa tertukar antara <b>faktor</b> (hasil pembagian, nilainya &le; bilangannya) dan <b>kelipatan</b> (hasil perkalian, nilainya &ge; bilangannya). Pada topik FPB kita hanya memakai <b>faktor</b>.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Mesin Faktor</h2>
+      <p class="hint">Masukkan sebuah bilangan, lalu lihat semua faktornya muncul berpasangan.</p>
+      <div class="controls no-print">
+        <div class="field">
+          <label for="mf-input">Bilangan (1 - 200)</label>
+          <input type="number" id="mf-input" min="1" max="200" value="24">
+        </div>
+        <button class="btn" id="mf-run">Cari Faktor</button>
+        <button class="btn ghost" id="mf-dice">Bilangan Acak</button>
+      </div>
+      <div style="margin-top:.9rem">
+        <p style="margin:0 0 .3rem"><b>Kalikan pasangan berikut:</b></p>
+        <div class="chips" id="mf-pairs" aria-live="polite"></div>
+        <p style="margin:.9rem 0 .3rem"><b>Himpunan faktor:</b></p>
+        <div class="chips" id="mf-list"></div>
+        <p class="hint" id="mf-count" style="margin:.6rem 0 0"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Faktor Prima dan Faktorisasi Prima</h2>
+    <div class="grid g2">
+      <div>
+        <p>Sebelum masuk ke cara cepat mencari FPB, kenali dulu dua istilah penting ini.</p>
+        <dl class="dl">
+          <dt>Bilangan prima</dt><dd>Bilangan asli lebih dari 1 yang faktornya hanya dua: 1 dan dirinya sendiri. Contoh: 2, 3, 5, 7, 11, 13.</dd>
+          <dt>Faktor prima</dt><dd>Faktor dari suatu bilangan yang sekaligus bilangan prima.</dd>
+          <dt>Faktorisasi prima</dt><dd>Menulis suatu bilangan sebagai perkalian faktor-faktor primanya. Contoh: <span class="mono">36 = 2 &times; 2 &times; 3 &times; 3 = 2<sup>2</sup> &times; 3<sup>2</sup></span>.</dd>
+        </dl>
+      </div>
+      <div>
+        <p><b>Tabel bilangan prima pertama</b> (hafalkan sampai 29, akan sangat membantu):</p>
+        <div class="chips" id="primes-row"></div>
+        <div class="callout tip" style="margin-top:.9rem;margin-bottom:0">
+          <p style="margin:0"><b>Uji cepat:</b> 2, 3, 5, dan 10 adalah faktor favorit. Bilangan berakhiran 0, 2, 4, 6, 8 selalu punya faktor 2. Jumlah digitnya habis dibagi 3, maka bilangan itu punya faktor 3. Berakhiran 0 atau 5, maka punya faktor 5.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BAB 3 : FAKTOR PERSEKUTUAN & FPB ============================ -->
+<section class="chapter" id="ch3" data-title="Faktor Persekutuan" data-nav="Faktor Persekutuan">
+  <div class="chap-head">
+    <span class="eyebrow">Bab 3 - Cara I: Mendaftar Faktor</span>
+    <h1>Faktor Persekutuan dan FPB</h1>
+    <p class="lead"><b>Persekutuan</b> artinya "sama-sama dimiliki". Jadi faktor persekutuan adalah faktor yang dimiliki oleh dua bilangan atau lebih.</p>
+  </div>
+
+  <div class="callout def">
+    <span class="tag">Definisi</span>
+    <p style="margin:0"><b>FPB (Faktor Persekutuan Terbesar)</b> adalah faktor bersama yang nilainya paling besar dari dua bilangan atau lebih. Selalu ada minimal angka 1, sehingga FPB dua bilangan apapun tidak pernah nol.</p>
+  </div>
+
+  <div class="card">
+    <h2>Laboratorium Faktor Persekutuan</h2>
+    <p class="hint">Bandingkan himpunan faktor dua bilangan. Faktor yang <span class="chip shared" style="min-width:auto;padding:.05rem .4rem;animation:none">berwarna kuning</span> adalah faktor persekutuan, dan yang <span class="chip max" style="min-width:auto;padding:.05rem .4rem;animation:none">berwarna biru tua</span> adalah FPB-nya.</p>
+
+    <div class="controls no-print" style="margin-top:.9rem">
+      <div class="field"><label for="cf-a">Bilangan pertama</label><input type="number" id="cf-a" min="1" max="200" value="24"></div>
+      <div class="field"><label for="cf-b">Bilangan kedua</label><input type="number" id="cf-b" min="1" max="200" value="36"></div>
+      <button class="btn" id="cf-run">Bandingkan</button>
+      <button class="btn ghost" id="cf-dice">Contoh Acak</button>
+    </div>
+
+    <div id="cf-out" style="margin-top:1rem"></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h2>Langkah baku cara mendaftar</h2>
+      <ol class="steps" id="cf-steps"></ol>
+      <div class="callout tip" style="margin-bottom:0">
+        <h4>Tips memeriksa jawaban</h4>
+        <p style="margin:0">Hasil FPB harus bisa membagi habis <b>semua</b> bilangannya. Coba bagikan: jika ada sisa, berarti jawabanmu belum benar.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Contoh selesai: FPB 24 dan 36</h2>
+      <div id="cf-worked"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Kenapa FPB Berguna dalam Kehidupan Sehari-hari?</h2>
+    <div class="grid g3">
+      <div><h3>Membagi hadiah</h3><p class="hint">Jumlah kantong paling banyak agar setiap kantong berisi sama banyak tanpa sisa.</p></div>
+      <div><h3>Memotong tali / kertas</h3><p class="hint">Panjang potongan paling panjang agar dua utas tali habis terpotong tanpa sisa.</p></div>
+      <div style="border:0"><h3>Membentuk barisan</h3><p class="hint">Jumlah barisan paling banyak agar banyak siswa tiap barisan sama rata di tiap regu.</p></div>
+    </div>
+    <div class="callout" style="margin-bottom:0">
+      <p style="margin:0"><b>Penanda soal FPB:</b> kata kuncinya biasanya "paling banyak", "sama besar", "sama banyak", "habis terpotong", dan "tanpa sisa". Kalau soalnya menanyakan "berikutnya bersamaan" atau "paling kecil", itu topik KPK, bukan FPB.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BAB 4 : FAKTORISASI PRIMA ============================ -->
+<section class="chapter" id="ch4" data-title="Faktorisasi Prima" data-nav="Faktorisasi Prima">
+  <div class="chap-head">
+    <span class="eyebrow">Bab 4 - Cara II dan Cara III</span>
+    <h1>Faktorisasi Prima dan Tabel Pembagian</h1>
+    <p class="lead">Mendaftar faktor melelahkan untuk bilangan besar. Cara cepatnya: uraikan tiap bilangan menjadi faktor-faktor prima, lalu ambil yang sama dengan pangkat terkecil.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h2>Pohon Faktor</h2>
+      <p class="hint">Cabang yang berhenti pada bilangan prima ditandai hijau. Cabang itu tidak boleh diuraikan lagi.</p>
+      <div class="controls no-print" style="margin-top:.8rem">
+        <div class="field"><label for="pf-n">Uraikan bilangan</label><input type="number" id="pf-n" min="4" max="500" value="60"></div>
+        <button class="btn" id="pf-run">Buat Pohon</button>
+        <button class="btn ghost" id="pf-next">Bilangan Berikutnya</button>
+      </div>
+      <div style="margin-top:.9rem">
+        <div class="tree" id="pf-tree" aria-live="polite"></div>
+        <p style="margin:.8rem 0 .3rem"><b>Tahapan pembagian:</b></p>
+        <div class="tablewrap"><table class="math" id="pf-ladder"></table></div>
+        <div id="pf-result" style="margin-top:.8rem"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Aturan mengambil FPB dari faktorisasi prima</h2>
+      <ul class="steps">
+        <li><span>Uraikan <b>setiap</b> bilangan menjadi faktorisasi prima.</span></li>
+        <li><span>Ambil hanya faktor prima yang <b>muncul di semua bilangan</b> (irisan).</span></li>
+        <li><span>Untuk faktor yang sama, pakai pangkat yang <b>paling kecil</b>.</span></li>
+        <li><span>Kalikan hasilnya. Itulah FPB-nya.</span></li>
+      </ul>
+      <div class="callout warn" style="margin-bottom:0">
+        <h4>Awas ketukar dengan KPK</h4>
+        <p style="margin:0">FPB memakai pangkat <b>terkecil</b> dari faktor yang <b> sama</b>. KPK memakai pangkat <b>terbesar</b> dan mengambil <b>semua</b> faktor prima. Hafalkan: <b>Besar pada FPB ada di kata "faktor", jadi nilainya kecil; KPK justru besar nilainya</b>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Faktor Persekutuan Terbesar dari 60 dan 84</h2>
+    <div id="pf-demo"></div>
+  </div>
+</section>
+
+<!-- ============================ BAB 5 : LABORATORIUM FPB ============================ -->
+<section class="chapter" id="ch5" data-title="Laboratorium FPB" data-nav="Laboratorium">
+  <div class="chap-head">
+    <span class="eyebrow">Bab 5 - Alat Bantu</span>
+    <h1>Laboratorium FPB</h1>
+    <p class="lead">Masukkan dua atau tiga bilangan, pilih metodenya, dan modul akan menampilkan seluruh langkah pengerjaan seperti di buku tulis kamu.</p>
+  </div>
+
+  <div class="card">
+    <div class="controls">
+      <div class="field"><label for="lab-a">Bilangan 1</label><input type="number" id="lab-a" min="1" max="999" value="48"></div>
+      <div class="field"><label for="lab-b">Bilangan 2</label><input type="number" id="lab-b" min="1" max="999" value="72"></div>
+      <div class="field"><label for="lab-c">Bilangan 3 (opsional)</label><input type="number" id="lab-c" min="1" max="999" value="0"></div>
+      <div class="field wide">
+        <label for="lab-method">Metode</label>
+        <select id="lab-method">
+          <option value="daftar">Cara mendaftar faktor</option>
+          <option value="prima">Faktorisasi prima (pangkat terkecil)</option>
+          <option value="tabel">Tabel pembagian bersama</option>
+        </select>
+      </div>
+      <button class="btn" id="lab-run">Hitung &amp; Tampilkan Langkah</button>
+    </div>
+    <p class="hint" style="margin:.5rem 0 0">Isi bilangan ketiga dengan angka 0 jika tidak dipakai. Semua bilangan harus asli (lebih dari 0).</p>
+    <div id="lab-out" style="margin-top:1rem"></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h2>Uji Keberhasilan (Verifikasi)</h2>
+      <p class="hint">FPB yang benar wajib membagi habis semua bilangannya. Alat ini otomatis mengeceknya.</p>
+      <div id="lab-verify" style="margin-top:.7rem"></div>
+    </div>
+    <div class="card">
+      <h2>Kuis Kilat FPB</h2>
+      <p class="hint">Latih kecepatan: tentukan FPB, lalu cocokkan dengan jawaban alat di samping.</p>
+      <div id="flashbox" style="margin-top:.7rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BAB 6 : LATIHAN SOAL ============================ -->
+<section class="chapter" id="ch6" data-title="Latihan Soal" data-nav="Latihan Soal">
+  <div class="chap-head">
+    <span class="eyebrow">Bab 6 - Evaluasi</span>
+    <h1>Latihan Soal Interaktif</h1>
+    <p class="lead">Sepuluh soal acak: menentukan FPB, faktor persekutuan, faktorisasi prima, dan soal cerita. Setiap jawaban langsung diperiksa beserta pembahasannya.</p>
+  </div>
+
+  <div class="card">
+    <div class="quiz-top">
+      <span class="scorechip" id="q-progress">Soal 0 dari 10</span>
+      <span class="scorechip" id="q-score">Benar: 0</span>
+      <span class="scorechip" id="q-streak">Beruntun: 0</span>
+      <div class="meter" aria-hidden="true"><i id="q-meter"></i></div>
+      <button class="btn ghost sm no-print" id="q-restart">Ulangi Latihan</button>
+    </div>
+
+    <div id="quiz-stage"></div>
+    <div id="quiz-result" style="margin-top:1rem"></div>
+  </div>
+
+  <div class="card no-print">
+    <h2>Tips Mengerjakan</h2>
+    <div class="grid g3">
+      <div><h3>Baca dua kali</h3><p class="hint">Soal cerita sering tertukar antara ditanya FPB atau KPK. Cari kata kunci "paling banyak" dan "tanpa sisa".</p></div>
+      <div><h3>Cek dengan pembagian</h3><p class="hint">Setelah memilih jawaban, bagikan semua bilangan dengan FPB-mu. Ada sisa? Berarti jawaban terlalu besar.</p></div>
+      <div style="border:0"><h3>Kerjakan yang mudah dulu</h3><p class="hint">FPB dua bilangan yang salah satunya kelipatan bilangan lain = bilangan yang kecil. Contoh: FPB 6 dan 42 adalah 6.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BAB 7 : PERMAINAN ============================ -->
+<section class="chapter" id="ch7" data-title="Permainan" data-nav="Permainan">
+  <div class="chap-head">
+    <span class="eyebrow">Bab 7 - Tantangan</span>
+    <h1>Permainan: Kantong Hadiah Kelas</h1>
+    <p class="lead">Kamu panitia ulang tahun kelas. Bagikan semua barang ke dalam kantong yang isinya persis sama. Tidak boleh ada barang sisa, dan kantong harus sebanyak mungkin.</p>
+  </div>
+
+  <div class="card">
+    <div class="quiz-top">
+      <span class="scorechip" id="gm-round">Ronde 1</span>
+      <span class="scorechip" id="gm-score">Tuntas: 0</span>
+      <button class="btn ghost sm no-print" id="gm-new">Ganti Barang (Ronde Baru)</button>
+    </div>
+
+    <div class="grid g2" style="align-items:start">
+      <div>
+        <div id="gm-story"></div>
+        <div class="callout" style="margin-bottom:.6rem">
+          <span class="tag">Aturan main</span>
+          <ul style="margin:0;padding-left:1.15rem;font-size:.92rem">
+            <li>Setiap kantong wajib berisi sama banyak untuk tiap jenis barang.</li>
+            <li>Tidak boleh ada barang tersisa sama sekali.</li>
+            <li>Menang bila jumlah kantong yang kamu pilih <b>paling banyak</b> di antara yang sah.</li>
+          </ul>
+        </div>
+        <p style="margin:.3rem 0 .35rem"><b>Pilih jumlah kantong:</b></p>
+        <div class="chips no-print" id="gm-picks"></div>
+        <div class="btnrow no-print" style="margin-top:.8rem">
+          <button class="btn" id="gm-check">Bagikan ke Kantong</button>
+          <button class="btn ghost" id="gm-hint">Petunjuk</button>
+        </div>
+        <div id="gm-hintbox" style="margin-top:.7rem"></div>
+        <div id="gm-feedback" style="margin-top:.7rem"></div>
+      </div>
+
+      <div>
+        <p style="margin:0 0 .4rem"><b>Pratinjau pembagian</b> <span class="hint" id="gm-left"></span></p>
+        <div class="bags" id="gm-bags"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Refleksi Permainan</h2>
+    <p>Pada setiap ronde, jumlah kantong sah yang paling banyak selalu sama dengan <b>FPB</b> dari banyak barang tiap jenis. Perhatikan tabel berikut untuk memahami polanya.</p>
+    <div class="tablewrap"><table class="math" id="gm-log"></table></div>
+    <div class="callout tip" style="margin-bottom:0">
+      <p style="margin:0">Kalau kamu menyadari polanya: <b>jumlah kantong maksimum = FPB</b>, maka banyak tiap barang per kantong = banyak barang dibagi FPB. Itu persis cara menjawab soal cerita FPB.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BAB 8 : RANGKUMAN ============================ -->
+<section class="chapter" id="ch8" data-title="Rangkuman" data-nav="Rangkuman">
+  <div class="chap-head">
+    <span class="eyebrow">Bab 8 - Penutup</span>
+    <h1>Rangkuman, Kamus, dan Penilaian Diri</h1>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h2>Rangkuman Materi</h2>
+      <ol class="steps">
+        <li><span><b>Faktor</b> adalah bilangan yang membagi habis suatu bilangan. Faktor terkecil 1, terbesar bilangan itu sendiri.</span></li>
+        <li><span><b>Faktor persekutuan</b> adalah faktor yang sama-sama dimiliki dua bilangan atau lebih.</span></li>
+        <li><span><b>FPB</b> adalah faktor persekutuan yang paling besar.</span></li>
+        <li><span><b>Cara 1 - mendaftar faktor</b>: tulis semua faktor tiap bilangan, lingkarai yang sama, ambil terbesar.</span></li>
+        <li><span><b>Cara 2 - faktorisasi prima</b>: ambil faktor prima yang sama dengan pangkat terkecil, lalu kalikan.</span></li>
+        <li><span><b>Cara 3 - tabel pembagian</b>: bagi semua bilangan dengan bilangan prima yang sama terus menerus hingga tak ada pembagi bersama; FPB = hasil kali pembagi kiri.</span></li>
+        <li><span><b>Penerapan soal cerita</b>: FPB menyatakan banyak kelompok/kantong/potongan paling banyak agar semua terbagi rata tanpa sisa.</span></li>
+      </ol>
+      <div class="btnrow no-print">
+        <button class="btn" onclick="window.print()">Cetak / Simpan sebagai PDF</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Kamus Kecil</h2>
+      <dl class="dl">
+        <dt>Faktor</dt><dd>Pembagi habis suatu bilangan.</dd>
+        <dt>Bilangan prima</dt><dd>Bilangan asli lebih dari 1 dengan tepat dua faktor, yaitu 1 dan dirinya sendiri.</dd>
+        <dt>Bilangan komposit</dt><dd>Bilangan asli lebih dari 1 yang punya lebih dari dua faktor.</dd>
+        <dt>Bilangan 1</dt><dd>Bukan prima dan bukan komposit; hanya punya satu faktor.</dd>
+        <dt>Faktor persekutuan</dt><dd>Faktor yang sama-sama dimiliki beberapa bilangan.</dd>
+        <dt>FPB</dt><dd>Faktor Persekutuan Terbesar; ditulis misal FPB(12, 18) = 6.</dd>
+        <dt>Faktorisasi prima</dt><dd>Penulisan bilangan sebagai perkalian faktor-faktor primanya.</dd>
+        <dt>Saling prima</dt><dd>Dua bilangan yang FPB-nya 1, misal 8 dan 15.</dd>
+      </dl>
+      <div class="callout" style="margin-bottom:0">
+        <span class="tag">Rumus ringkas</span>
+        <p class="mono" style="margin:0;font-size:.95rem">FPB(a, b) &times; KPK(a, b) = a &times; b</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h2>Penilaian Diri</h2>
+      <p class="hint">Pilih tingkat keyakinanmu pada tiap pernyataan. Tidak ada jawaban salah.</p>
+      <div id="selfrate"></div>
+      <div class="result-hero" style="margin-top:.9rem">
+        <div>
+          <div class="lbl">Skor Keyakinan Diri</div>
+          <div class="big" id="sr-score">0</div>
+          <div class="sub" id="sr-msg">Isi penilaian diri di atas untuk melihat ringkasan.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Ringkasan Hasil Belajar</h2>
+      <div id="report"></div>
+      <div class="btnrow no-print" style="margin-top:.9rem">
+        <button class="btn ghost" data-go="6">Perbaiki Latihan</button>
+        <button class="btn ghost" data-go="7">Mainkan Lagi</button>
+        <button class="btn amber" id="report-reset">Mulai Modul dari Awal</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>PR dan Pengayaan</h2>
+    <div class="grid g2">
+      <div>
+        <h3>PR - wajib (kerjakan di buku tulis)</h3>
+        <ol>
+          <li>Tulis semua faktor dari 48, lalu dari 60. Tentukan faktor persekutuan dan FPB-nya.</li>
+          <li>Tentukan FPB dari 36 dan 54 dengan faktorisasi prima. Tuliskan pohon faktornya.</li>
+          <li>Tentukan FPB dari 24, 40, dan 64 dengan tabel pembagian.</li>
+          <li>Bu Ratna mempunyai 42 kue cokelat dan 56 kue keju. Dibagi ke beberapa kotak dengan isi sama banyak. Berapa kotak paling banyak dan isi tiap kotak?</li>
+          <li>Tali panjang 72 cm dan 96 cm dipotong menjadi bagian sama panjang dan sepanjang mungkin. Berapa panjang tiap potongan dan berapa banyak potongan seluruhnya?</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Pengayaan - untuk yang sudah tuntas</h3>
+        <ul>
+          <li>Cari dua bilangan yang FPB-nya 7 dan keduanya lebih dari 20. Berapa banyak pasangan yang mungkin? Tuliskan lima saja.</li>
+          <li>Buktikan dengan contoh: jika satu bilangan adalah kelipatan bilangan lain, maka FPB-nya bilangan yang kecil.</li>
+          <li>Selesaikan tanpa alat: FPB dari 105 dan 154. Petunjuk: urai 105 = 3 &times; 5 &times; 7.</li>
+          <li>Buat satu soal cerita FPB buatanmu sendiri beserta jawabannya, lalu tukarkan dengan temanmu.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="in">
+    <b style="color:var(--navy)">Media Pembelajaran Matematika Kelas 5</b>
+    <span>Topik: Faktor Persekutuan Terbesar (FPB)</span>
+    <span style="margin-left:auto">Dapat dibuka tanpa internet. Jalan di peramban HP maupun komputer.</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   MODUL ARI - fungsi matematika murni (diuji otomatis)
+   ==MATH-START==
+   ============================================================ */
+function isPrime(n){
+  if(n<2) return false;
+  if(n%2===0) return n===2;
+  for(let d=3; d*d<=n; d+=2) if(n%d===0) return false;
+  return true;
+}
+function smallestDivisor(n){
+  if(n<2) return n;
+  if(n%2===0) return 2;
+  for(let d=3; d*d<=n; d+=2) if(n%d===0) return d;
+  return n;
+}
+function factors(n){
+  n=Math.abs(Math.trunc(n));
+  if(!n) return [];
+  const out=[];
+  for(let i=1; i*i<=n; i++){
+    if(n%i===0){ out.push(i); if(i!==n/i) out.push(n/i); }
+  }
+  return out.sort((a,b)=>a-b);
+}
+function factorPairs(n){
+  n=Math.abs(Math.trunc(n));
+  const out=[];
+  if(!n) return out;
+  for(let i=1; i*i<=n; i++) if(n%i===0) out.push([i, n/i]);
+  return out;
+}
+function gcd(a,b){
+  a=Math.abs(Math.trunc(a)); b=Math.abs(Math.trunc(b));
+  while(b){ const t=a%b; a=b; b=t; }
+  return a||0;
+}
+function gcdAll(list){
+  return list.reduce((g,n)=>gcd(g,n), 0);
+}
+function commonFactors(list){
+  const sets=list.map(n=>factors(n));
+  if(!sets.length) return [];
+  return sets[0].filter(f=>sets.every(s=>s.indexOf(f)>-1));
+}
+function primeMap(n){
+  const m={}; let x=Math.abs(Math.trunc(n));
+  if(x<2) return m;
+  for(let d=2; d*d<=x; d+= (d===2?1:2)){
+    while(x%d===0){ m[d]=(m[d]||0)+1; x=x/d; }
+  }
+  if(x>1) m[x]=(m[x]||0)+1;
+  return m;
+}
+function primeFactorsFlat(n){
+  const m=primeMap(n), out=[];
+  Object.keys(m).map(Number).sort((a,b)=>a-b).forEach(p=>{ for(let i=0;i<m[p];i++) out.push(p); });
+  return out;
+}
+function ladderSteps(n){
+  const steps=[]; let x=Math.abs(Math.trunc(n));
+  if(x<2) return steps;
+  for(let d=2; d*d<=x; d+=(d===2?1:2)){
+    while(x%d===0){ steps.push({dividend:x, divisor:d, quotient:x/d}); x=x/d; }
+  }
+  if(x>1) steps.push({dividend:x, divisor:x, quotient:1});
+  return steps;
+}
+function sharedPrimeForFpb(list){
+  const maps=list.map(primeMap);
+  const keys=Object.keys(maps[0]).map(Number).sort((a,b)=>a-b).filter(p=>maps.every(m=>m[p]));
+  return keys.map(p=>({prime:p, power:Math.min.apply(null, maps.map(m=>m[p]))}));
+}
+function divisionTable(list){
+  const rows=[]; let cur=list.map(n=>Math.abs(Math.trunc(n)));
+  let guard=0;
+  while(guard++<40){
+    let p=2;
+    while(p<=Math.min.apply(null,cur) && cur.some(x=>x%p!==0)) p++;
+    if(p>Math.min.apply(null,cur)) break;
+    const quot=cur.map(x=>x/p);
+    rows.push({divisor:p, before:cur.slice(), after:quot});
+    cur=quot;
+  }
+  return rows;
+}
+function powerString(map){
+  const keys=Object.keys(map).map(Number).sort((a,b)=>a-b);
+  if(!keys.length) return "1";
+  return keys.map(p=>map[p]>1?p+"<sup>"+map[p]+"</sup>":String(p)).join(" &times; ");
+}
+/* ==MATH-END== */
+
+/* ============================================================
+   UTIL DOM
+   ============================================================ */
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>Array.prototype.slice.call((r||document).querySelectorAll(s));
+function tag(name, cls, html){
+  const e=document.createElement(name);
+  if(cls) e.className=cls;
+  if(html!==undefined) e.innerHTML=html;
+  return e;
+}
+function chip(v, cls){ return '<span class="chip '+(cls||'')+'">'+v+'</span>'; }
+function clampInt(input, min, max, fallback){
+  let v=Math.trunc(Number(input.value));
+  if(!isFinite(v)||v<min||v>max) v=fallback;
+  input.value=v; return v;
+}
+function randInt(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
+function shuffle(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function uniq(arr){ return arr.filter((v,i)=>arr.indexOf(v)===i); }
+
+/* ============================================================
+   NAVIGASI BAB + PROGRES
+   ============================================================ */
+const CHAPTERS=$$(".chapter");
+let current=1;
+
+(function buildNav(){
+  const nav=$("#chapNav");
+  CHAPTERS.forEach((sec,i)=>{
+    const b=tag("button","chapbtn");
+    b.type="button";
+    b.innerHTML='<span class="num">'+(i+1)+'</span>'+sec.dataset.nav;
+    b.dataset.idx=i+1;
+    b.setAttribute("aria-controls",sec.id);
+    b.addEventListener("click",()=>go(i+1));
+    nav.appendChild(b);
+  });
+})();
+
+function go(idx){
+  if(idx<1) idx=1;
+  if(idx>CHAPTERS.length) idx=CHAPTERS.length;
+  current=idx;
+  CHAPTERS.forEach((sec,i)=>sec.classList.toggle("active", i+1===idx));
+  $$(".chapbtn").forEach(b=>{
+    const i=Number(b.dataset.idx);
+    b.setAttribute("aria-current", i===idx ? "true" : "false");
+  });
+  markDone(idx);
+  updateProgress();
+  if(idx===8) renderReport();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>go(Number(b.dataset.go))));
+
+const doneSet=new Set();
+function markDone(idx){ doneSet.add(idx); $$(".chapbtn").forEach(b=>b.classList.toggle("done", doneSet.has(Number(b.dataset.idx)))); }
+function updateProgress(){
+  const pct=Math.round(doneSet.size/CHAPTERS.length*100);
+  $("#overallPct").textContent=pct+"%";
+  $("#overallBar").querySelector("i").style.width=pct+"%";
+  $("#overallBar").setAttribute("aria-valuenow",String(pct));
+  $("#chapCount").textContent="Bab "+current+" / "+CHAPTERS.length;
+}
+document.addEventListener("keydown",e=>{
+  if(!e.altKey) return;
+  if(e.key==="ArrowRight") { go(current+1); e.preventDefault(); }
+  if(e.key==="ArrowLeft")  { go(current-1); e.preventDefault(); }
+});
+
+/* ============================================================
+   BAB 2 : MESIN FAKTOR
+   ============================================================ */
+function renderMesinFaktor(){
+  const n=clampInt($("#mf-input"),1,200,24);
+  const pairsBox=$("#mf-pairs"), listBox=$("#mf-list");
+  pairsBox.innerHTML=""; listBox.innerHTML="";
+  factorPairs(n).forEach(p=>{
+    const s=tag("span","chip", p[0]+" &times; "+p[1]+" = "+n);
+    s.style.minWidth="0";
+    pairsBox.appendChild(s);
+  });
+  const fs=factors(n);
+  fs.forEach((f,i)=>{
+    const c=tag("span","chip",String(f));
+    c.style.animationDelay=(i*35)+"ms";
+    listBox.appendChild(c);
+  });
+  $("#mf-count").innerHTML="<b>"+n+"</b> memiliki <b>"+fs.length+"</b> faktor, yaitu "+fs.join(", ")+
+    ". Faktor terkecil 1, faktor terbesar "+n+"."+(isPrime(n)?" Karena faktornya hanya dua, <b>"+n+" adalah bilangan prima</b>.":"");
+}
+$("#mf-run").addEventListener("click",renderMesinFaktor);
+$("#mf-input").addEventListener("keydown",e=>{ if(e.key==="Enter") renderMesinFaktor(); });
+$("#mf-dice").addEventListener("click",()=>{ $("#mf-input").value=randInt(12,96); renderMesinFaktor(); });
+$("#primes-row").innerHTML=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47]
+  .map(p=>'<span class="chip leaf" style="animation:none">'+p+"</span>").join("");
+
+/* ============================================================
+   BAB 3 : LAB FAKTOR PERSEKUTUAN
+   ============================================================ */
+function renderCommon(){
+  const a=clampInt($("#cf-a"),1,200,24), b=clampInt($("#cf-b"),1,200,36);
+  const fa=factors(a), fb=factors(b);
+  const cf=commonFactors([a,b]);
+  const f=cf[cf.length-1];
+  const out=$("#cf-out");
+  out.innerHTML="";
+
+  const rows=tag("div","");
+  [[a,fa],[b,fb]].forEach(pair=>{
+    const r=tag("div","factorrow");
+    r.innerHTML='<div class="ttl">'+pair[0]+'<small>faktornya</small></div>';
+    const chips=tag("div","chips");
+    pair[1].forEach(x=>{
+      const shared=cf.indexOf(x)>-1;
+      chips.insertAdjacentHTML("beforeend", chip(x, shared ? (x===f?"max":"shared") : ""));
+    });
+    r.appendChild(chips);
+    rows.appendChild(r);
+  });
+  out.appendChild(rows);
+
+  const c=tag("div","");
+  c.style.marginTop=".9rem";
+  c.innerHTML='<p style="margin:0 0 .35rem"><b>Faktor persekutuan dari '+a+' dan '+b+':</b></p>'+
+    '<div class="chips">'+cf.map(x=>chip(x, x===f?"max":"shared")).join("")+"</div>";
+  out.appendChild(c);
+
+  const hero=tag("div","result-hero");
+  hero.style.marginTop=".9rem";
+  hero.innerHTML='<div><div class="lbl">FPB</div><div class="big">'+f+"</div></div>"+
+    '<div class="sep"></div><div class="sub">Banyak faktor persekutuan: <b>'+cf.length+"</b><br>"+
+    a+" &divide; "+f+" = "+(a/f)+"<br>"+b+" &divide; "+f+" = "+(b/f)+"</div>";
+  out.appendChild(hero);
+
+  const lg=tag("div","legend");
+  lg.innerHTML='<span><i class="i-plain"></i>faktor saja</span><span><i class="i-shared"></i>faktor persekutuan</span><span><i class="i-max"></i>FPB (terbesar)</span>';
+  out.appendChild(lg);
+}
+$("#cf-run").addEventListener("click",renderCommon);
+[$("#cf-a"),$("#cf-b")].forEach(i=>i.addEventListener("keydown",e=>{ if(e.key==="Enter") renderCommon(); }));
+$("#cf-dice").addEventListener("click",()=>{
+  const base=randInt(2,12); const f=randInt(2,5);
+  $("#cf-a").value=base*f*randInt(1,2);
+  $("#cf-b").value=base*f*randInt(1,2);
+  if(Number($("#cf-a").value)>200) $("#cf-a").value=base*f;
+  if(Number($("#cf-b").value)>200) $("#cf-b").value=base*f;
+  renderCommon();
+});
+
+$("#cf-steps").innerHTML=[
+  "Tulis <b>semua faktor</b> bilangan pertama, dari kecil ke besar.",
+  "Tulis <b>semua faktor</b> bilangan kedua, dari kecil ke besar.",
+  "<b>Lingkari</b> angka yang muncul pada kedua daftar itu.",
+  "Pilih angka <b>terbesar</b> yang dilingkari. Itulah FPB."
+].map(t=>"<li><span>"+t+"</span></li>").join("");
+
+(function workedExample(){
+  const box=$("#cf-worked");
+  const a=24,b=36;
+  const fa=factors(a),fb=factors(b),cf=commonFactors([a,b]),f=cf[cf.length-1];
+  box.innerHTML=
+    '<div class="eqbox">faktor '+a+" = "+fa.join(", ")+"</div>"+
+    '<div class="eqbox" style="margin-top:.4rem">faktor '+b+" = "+fb.join(", ")+"</div>"+
+    '<p style="margin:.8rem 0 .3rem">Faktor persekutuan: <b>'+cf.join(", ")+"</b></p>"+
+    '<p style="margin:0 0 .8rem">Yang terbesar adalah <b>'+f+"</b>, jadi <b>FPB("+a+", "+b+") = "+f+"</b>.</p>"+
+    '<div class="callout tip" style="margin-bottom:0"><p style="margin:0">Artinya: 24 buku dan 36 pensil dapat dibuat menjadi <b>'+f+
+    " kantong</b>, masing-masing berisi <b>"+(a/f)+" buku</b> dan <b>"+(b/f)+" pensil</b>, tanpa sisa.</p></div>";
+})();
+
+/* ============================================================
+   BAB 4 : POHON FAKTOR + FAKTORISASI PRIMA
+   ============================================================ */
+/* Gambar pohon faktor memakai teks, agar aman tanpa pustaka eksternal. */
+function prettyTree(n){
+  n=Math.abs(Math.trunc(n));
+  const lines=[];
+  const BRANCH="\u251C\u2500\u2500 ", LAST="\u2514\u2500\u2500 ", VBAR="\u2502";
+  (function rec(value, prefix, isLast, isRoot){
+    const connector = isRoot ? "" : (isLast ? LAST : BRANCH);
+    lines.push(prefix+connector+value+(isPrime(value)?" (prima)":""));
+    if(value<2 || isPrime(value)) return;
+    const d=smallestDivisor(value);
+    const childPrefix = prefix + (isRoot ? "" : (isLast ? "    " : VBAR+"   "));
+    rec(d, childPrefix, false, false);
+    rec(value/d, childPrefix, true, false);
+  })(n, "", true, true);
+  return lines.join("\n").replace(/\(prima\)/g,'<span class="pk">(prima)</span>');
+}
+function renderPrime(){
+  const n=clampInt($("#pf-n"),4,500,60);
+  const steps=ladderSteps(n);
+  $("#pf-tree").innerHTML = prettyTree(n);
+  const t=$("#pf-ladder");
+  t.innerHTML="<thead><tr><th>Langkah</th><th>Bilangan</th><th>&divide;</th><th>Hasil</th></tr></thead><tbody>"+
+    steps.map((s,i)=>"<tr><td>"+(i+1)+"</td><td>"+s.dividend+"</td><td class='div'>"+s.divisor+"</td><td>"+s.quotient+"</td></tr>").join("")+
+    "</tbody>";
+  const map=primeMap(n);
+  $("#pf-result").innerHTML='<div class="result-hero"><div><div class="lbl">Faktorisasi Prima</div>'+
+    '<div style="font-size:1.3rem;font-weight:800">'+n+" = "+powerString(map)+"</div>"+
+    '<div class="sub">faktor prima: '+primeFactorsFlat(n).join(", ")+"</div></div></div>";
+}
+function prettyTree(n){
+  if(isPrime(n)) return String(n)+" (prima)";
+  const lines=[];
+  (function walk(value, prefix, isLast, root){
+    const label = value + (isPrime(value) ? " (prima)" : "");
+    if(root){ lines.push(String(value)); }
+    else { lines.push(prefix + (isLast?String.fromCharCode(9492):String.fromCharCode(9500)) + String.fromCharCode(9472)+String.fromCharCode(9472)+" "+label); }
+    if(!isPrime(value)){
+      const d=smallestDivisor(value);
+      const childPrefix = root ? "" : prefix + (isLast ? "   " : String.fromCharCode(9474)+"   ");
+      const kids=[d, value/d].map(k=>k);
+      // uraikan: cabang kiri (prima) lalu cabang kanan
+      const leftLabel = d + " (prima)";
+      lines.push(childPrefix+String.fromCharCode(9500)+String.fromCharCode(9472)+String.fromCharCode(9472)+" "+leftLabel);
+      walk(value/d, childPrefix+String.fromCharCode(9474)+"   ", true, false);
+    }
+  })(n,"",true,true);
+  return lines.join("\n").replace(/\(prima\)/g,'<span class="pk">(prima)</span>');
+}
+$("#pf-run").addEventListener("click",renderPrime);
+$("#pf-n").addEventListener("keydown",e=>{ if(e.key==="Enter") renderPrime(); });
+$("#pf-next").addEventListener("click",()=>{
+  const seq=[60,72,84,96,108,120,144,180,210,240];
+  const cur=Number($("#pf-n").value);
+  const nxt=seq.filter(s=>s>cur)[0]||seq[0];
+  $("#pf-n").value=nxt; renderPrime();
+});
+(function pfDemo(){
+  const a=60,b=84;
+  const ma=primeMap(a), mb=primeMap(b);
+  const shared=sharedPrimeForFpb([a,b]);
+  const f=shared.reduce((p,s)=>p*Math.pow(s.prime,s.power),1);
+  const rows=Object.keys(ma).concat(Object.keys(mb))
+    .map(Number).filter((v,i,arr)=>arr.indexOf(v)===i).sort((x,y)=>x-y);
+  const html='<div class="eqbox">'+a+" = "+powerString(ma)+"</div>"+
+    '<div class="eqbox" style="margin-top:.4rem">'+b+" = "+powerString(mb)+"</div>"+
+    '<div class="tablewrap" style="margin-top:.8rem"><table class="math"><thead><tr><th>Bilangan prima</th><th>pangkat di '+a+"</th><th>pangkat di "+b+"</th><th>dipakai (terkecil)</th></tr></thead><tbody>"+
+    rows.map(p=>{
+      const pa=ma[p]||0, pb=mb[p]||0;
+      const use=(pa&&pb)?Math.min(pa,pb):0;
+      return "<tr><td>"+p+"</td><td>"+(pa||"-")+"</td><td>"+(pb||"-")+"</td><td"+(use?' class="div"':"")+">"+(use||"tidak dipakai")+"</td></tr>";
+    }).join("")+"</tbody></table></div>"+
+    '<p style="margin:.8rem 0 0">FPB('+a+", "+b+") = "+
+      (shared.length?shared.map(s=>s.power>1?s.prime+"<sup>"+s.power+"</sup>":String(s.prime)).join(" &times; "):"1")+
+      " = <b>"+f+"</b>.</p>"+
+    '<p class="hint">Perhatikan: pangkat 2 untuk faktor 2 diambil dari '+a+", bukan "+b+" yang berpangkat lebih besar.</p>";
+  $("#pf-demo").innerHTML=html;
+})();
+
+/* ============================================================
+   BAB 5 : LABORATORIUM FPB
+   ============================================================ */
+function labNumbers(){
+  const a=clampInt($("#lab-a"),1,999,48), b=clampInt($("#lab-b"),1,999,72);
+  const cRaw=Number($("#lab-c").value);
+  const list=[a,b];
+  if(isFinite(cRaw)&&cRaw>=1&&cRaw<=999) list.push(Math.trunc(cRaw));
+  return list;
+}
+function renderLab(){
+  const list=labNumbers();
+  const method=$("#lab-method").value;
+  const f=gcdAll(list);
+  const out=$("#lab-out");
+  out.innerHTML="";
+
+  const head=tag("div","result-hero");
+  head.innerHTML='<div><div class="lbl">FPB '+list.join(", ")+"</div><div class=\"big\">"+f+"</div></div>"+
+    '<div class="sep"></div><div class="sub">Metode: <b>'+
+    (method==="daftar"?"mendaftar faktor":method==="prima"?"faktorisasi prima":"tabel pembagian bersama")+
+    "</b><br>"+list.map(n=>n+" &divide; "+f+" = "+(n/f)).join("<br>")+"</div>";
+  out.appendChild(head);
+
+  const body=tag("div","");
+  body.style.marginTop="1rem";
+
+  if(method==="daftar"){
+    body.innerHTML='<h3>Langkah 1 - daftar semua faktor</h3>';
+    list.forEach(n=>{
+      body.insertAdjacentHTML("beforeend",'<div class="factorrow"><div class="ttl">'+n+'<small>faktornya</small></div><div class="chips">'+
+        factors(n).map(x=>chip(x)).join("")+"</div></div>");
+    });
+    const cf=commonFactors(list);
+    body.insertAdjacentHTML("beforeend",'<h3 style="margin-top:1rem">Langkah 2 - faktor persekutuan</h3><div class="chips">'+
+      cf.map(x=>chip(x, x===f?"max":"shared")).join("")+"</div>");
+    body.insertAdjacentHTML("beforeend",'<h3 style="margin-top:1rem">Langkah 3 - ambil yang terbesar</h3>'+
+      '<div class="callout tip" style="margin-bottom:0"><p style="margin:0">Angka terbesar pada daftar persekutuan di atas adalah <b>'+f+"</b>, jadi <b>FPB("+list.join(", ")+") = "+f+"</b>.</p></div>");
+  }
+
+  if(method==="prima"){
+    body.innerHTML='<h3>Langkah 1 - uraikan tiap bilangan ke faktor prima</h3>';
+    list.forEach(n=>{
+      const steps=ladderSteps(n);
+      body.insertAdjacentHTML("beforeend",
+        '<div class="factorrow"><div class="ttl">'+n+'<small>faktorisasi prima</small></div><div><div class="eqbox">'+
+        n+" = "+powerString(primeMap(n))+'</div><div class="hint">'+
+        (steps.length?steps.map(s=>s.dividend+" &divide; "+s.divisor+" = "+s.quotient).join(" ; "):n+" sudah prima")+"</div></div></div>");
+    });
+    const maps=list.map(primeMap);
+    const keys=uniq(maps.reduce((a,m)=>a.concat(Object.keys(m).map(Number)),[])).sort((x,y)=>x-y);
+    const shared=sharedPrimeForFpb(list);
+    let table='<h3 style="margin-top:1rem">Langkah 2 - pilih pangkat terkecil dari faktor yang sama</h3><div class="tablewrap"><table class="math"><thead><tr><th>Prima</th>'+
+      list.map(n=>"<th>"+n+"</th>").join("")+"<th>terkecil</th></tr></thead><tbody>"+
+      keys.map(p=>{
+        const exps=maps.map(m=>m[p]||0);
+        const allHas=exps.every(e=>e>0);
+        const use=allHas?Math.min.apply(null,exps):0;
+        return "<tr><td>"+p+"</td>"+exps.map(e=>"<td>"+(e||"-")+"</td>").join("")+
+          "<td"+(use?' class="div"':"")+">"+(use||"-")+"</td></tr>";
+      }).join("")+"</tbody></table></div>";
+    body.insertAdjacentHTML("beforeend",table);
+    body.insertAdjacentHTML("beforeend",'<h3 style="margin-top:1rem">Langkah 3 - kalikan</h3><div class="eqbox">FPB = '+
+      (shared.length?shared.map(s=>s.power>1?s.prime+"<sup>"+s.power+"</sup>":String(s.prime)).join(" &times; "):"1")+
+      " = <b>"+f+"</b></div>"+
+      (shared.length<2?'<p class="hint">Hanya satu faktor prima yang sama (atau tidak ada), jadi FPB-nya kecil. Dua bilangan tanpa faktor prima bersama disebut <b>saling prima</b> dan FPB-nya 1.</p>':""));
+  }
+
+  if(method==="tabel"){
+    const rows=divisionTable(list);
+    let t='<h3>Langkah 1 - bagi terus dengan bilangan prima yang sama</h3><div class="tablewrap"><table class="math"><thead><tr><th>&divide;</th>'+
+      list.map((n,i)=>"<th>kolom "+(i+1)+"</th>").join("")+"</tr></thead><tbody>";
+    if(!rows.length){
+      t+="<tr><td class='hl'>-</td>"+list.map(n=>"<td>"+n+"</td>").join("")+"</tr>";
+    }else{
+      rows.forEach(r=>{ t+="<tr><td class='div'>"+r.divisor+"</td>"+r.after.map(v=>"<td>"+v+"</td>").join("")+"</tr>"; });
+    }
+    t+="</tbody></table></div>";
+    body.insertAdjacentHTML("beforeend",t);
+    const mult=rows.map(r=>r.divisor);
+    body.insertAdjacentHTML("beforeend",'<h3 style="margin-top:1rem">Langkah 2 - kalikan pembagi di kolom kiri</h3>'+
+      '<div class="eqbox">FPB = '+(mult.length?mult.join(" &times; "):"1")+" = <b>"+f+"</b></div>"+
+      '<div class="callout warn" style="margin-bottom:0"><p style="margin:0">Baris terakhir berhenti karena tidak ada lagi bilangan prima yang membagi <b>semua</b> kolom. Pada tabel untuk FPB, sisa bilangan di baris bawah <b>tidak</b> dikalikan (kalau mengalikan semuanya, itu cara KPK).</p></div>');
+    if(mult.length){
+      body.insertAdjacentHTML("beforeend",'<p class="hint" style="margin-top:.6rem">Tabel di atas memakai pembagi yang membagi semua bilangan sekaligus. Cara lain yang juga sah adalah membagi per pasangan; hasilnya tetap sama, yaitu '+f+".</p>");
+    }
+  }
+  out.appendChild(body);
+
+  renderVerify(list,f);
+}
+function renderVerify(list,f){
+  const box=$("#lab-verify");
+  const parts=list.map(n=>({n:n, q:n/f, r:n%f}));
+  const ok=parts.every(p=>p.r===0);
+  const reduced=list.map(n=>n/f);
+  box.innerHTML='<div class="tablewrap"><table class="math"><thead><tr><th>Bilangan</th><th>&divide; FPB</th><th>Sisa</th><th>Kesimpulan</th></tr></thead><tbody>'+
+    parts.map(p=>"<tr><td>"+p.n+"</td><td>"+p.q+'</td><td class="'+(p.r?"":"div")+'">'+p.r+"</td><td>"+(p.r?"tidak habis":"habis")+"</td></tr>").join("")+
+    "</tbody></table></div>"+
+    '<div class="callout '+(ok?"tip":"warn")+'" style="margin-top:.8rem;margin-bottom:0"><p style="margin:0">'+
+    (ok?"Semua bilangan habis dibagi <b>"+f+"</b>. Jawaban <b>dinyatakan benar</b>."
+       :"Ada sisa pembagian, berarti "+f+" bukan FPB yang sah.")+
+    (reduced.length>1?"<br>Cek lanjut: hasil pembagian "+reduced.join(" dan ")+" tidak punya faktor persekutuan selain 1, yaitu FPB("+reduced.join(", ")+") = "+gcdAll(reduced)+". Ini ciri FPB sudah paling besar.":"")+
+    "</p></div>";
+}
+$("#lab-run").addEventListener("click",renderLab);
+$("#lab-method").addEventListener("change",renderLab);
+[$("#lab-a"),$("#lab-b"),$("#lab-c")].forEach(i=>i.addEventListener("keydown",e=>{ if(e.key==="Enter") renderLab(); }));
+
+/* Kuis kilat di bab 5 */
+(function flash(){
+  const box=$("#flashbox");
+  function gen(){
+    const a=randInt(12,80), b=randInt(12,80), f=gcd(a,b);
+    box.innerHTML='<div class="eqbox" style="font-size:1.15rem;text-align:center">FPB( '+a+", "+b+" ) = ?</div>"+
+      '<div class="controls no-print" style="margin-top:.7rem"><div class="field"><label for="fl-ans">Jawabanmu</label>'+
+      '<input type="number" id="fl-ans" min="1" max="99" placeholder="ketik angka"></div>'+
+      '<button class="btn" id="fl-ok">Periksa</button><button class="btn ghost" id="fl-new">Soal Baru</button></div>'+
+      '<div id="fl-fb" style="margin-top:.7rem"></div>';
+    $("#fl-ok").addEventListener("click",()=>{
+      const v=Number($("#fl-ans").value);
+      const fb=$("#fl-fb");
+      const cf=commonFactors([a,b]);
+      if(v===f){
+        fb.innerHTML='<div class="fb ok show"><div class="verdict">Tepat sekali</div><p>FPB('+a+", "+b+") = "+f+". Faktor persekutuan keduanya: "+cf.join(", ")+".</p></div>";
+      }else{
+        fb.innerHTML='<div class="fb no show"><div class="verdict">Belum tepat</div><p>Jawabanmu '+(isFinite(v)&&v?v:"(kosong)")+", seharusnya <b>"+f+
+        "</b>. Faktor persekutuan "+a+" dan "+b+" adalah "+cf.join(", ")+"; yang terbesar adalah FPB-nya.</p></div>";
+      }
+    });
+    $("#fl-new").addEventListener("click",gen);
+    $("#fl-ans").addEventListener("keydown",e=>{ if(e.key==="Enter") $("#fl-ok").click(); });
+  }
+  gen();
+})();
+
+/* ============================================================
+   BAB 6 : KUIS
+   ============================================================ */
+const QUIZ={n:10, i:0, score:0, streak:0, best:0, items:[], answered:[], started:false, locked:false};
+
+/* Buat 4 pilihan ganda yang selalu memuat jawaban benar. */
+function optSet(correct, wrongs, fmt){
+  fmt=fmt||function(v){ return String(v); };
+  const pool=[];
+  uniq([correct].concat(wrongs)).forEach(function(v){
+    if(v===correct || pool.indexOf(v)>-1) return;
+    if(typeof v==="number" && (!(v>0) || v>9999)) return;
+    if(typeof v!=="number" && !v) return;
+    pool.push(v);
+  });
+  const chosen=shuffle(pool).slice(0,3);
+  [correct+1, correct-1, correct*2, correct+3].forEach(function(v){
+    if(chosen.length<3 && v>0 && v!==correct && chosen.indexOf(v)<0) chosen.push(v);
+  });
+  return shuffle([correct].concat(chosen)).map(function(v){
+    return {label:fmt(v), value:v, right:v===correct};
+  });
+}
+
+const TIPE_LABEL={
+  fpb2:"FPB dua bilangan", fpb3:"FPB tiga bilangan", faktorBukan:"Faktor bilangan",
+  factPrima:"Faktorisasi prima", cerita:"Soal cerita", sifatFpb:"Sifat FPB",
+  kelompok:"Pembagian kelompok", primaAtau:"Bilangan prima"
+};
+
+function makeQuiz(){
+  const items=[];
+  const types=["fpb2","fpb3","faktorBukan","factPrima","cerita","sifatFpb","kelompok","primaAtau"];
+  let guard=0;
+  while(items.length<QUIZ.n && guard++<500){
+    const type=types[items.length%types.length];
+    const it=buildItem(type);
+    if(it) items.push(it);
+  }
+  return shuffle(items).slice(0,QUIZ.n);
+}
+function buildItem(type){
+  if(type==="fpb2"){
+    const a=randInt(12,72), b=randInt(12,72);
+    if(a===b) return null;
+    const f=gcd(a,b);
+    const wrongs=[Math.min(a,b),lcm(a,b),Math.max(1,Math.floor(f/2)),f+1,f*2].filter(x=>x>0&&x!==f);
+    return {tipe:"fpb2", q:"Tentukan FPB dari "+a+" dan "+b+".",
+      opts:optSet(f,wrongs),
+      why:"Faktor "+a+" = "+factors(a).join(", ")+". Faktor "+b+" = "+factors(b).join(", ")+
+          ". Faktor persekutuannya "+commonFactors([a,b]).join(", ")+", yang terbesar = "+f+"."};
+  }
+  if(type==="fpb3"){
+    const k=randInt(2,6), x=randInt(1,5), y=randInt(1,5), z=randInt(1,5);
+    const a=k*(2*x+1), b=k*(3*y+1), c=k*(5*z+1);
+    if(a>99||b>99||c>99) return null;
+    const f=gcdAll([a,b,c]);
+    if(f<2) return null;
+    return {tipe:"fpb3", q:"FPB dari "+a+", "+b+", dan "+c+" adalah ...",
+      opts:optSet(f,[k,Math.max(1,Math.floor(f/2)),Math.min(a,b,c),f*2]),
+      why:"Faktorisasi prima: "+a+" = "+powerString(primeMap(a))+", "+b+" = "+powerString(primeMap(b))+", "+c+" = "+powerString(primeMap(c))+
+        ". Faktor prima yang sama pada ketiganya dengan pangkat terkecil menghasilkan FPB = "+f+"."};
+  }
+  if(type==="faktorBukan"){
+    const n=[24,36,48,60,72,84,96][randInt(0,6)];
+    const fs=factors(n);
+    const not=uniq([n+2,n-1,Math.trunc(n/2)+3,n*2]).filter(x=>x>1&&fs.indexOf(x)<0&&x<=200);
+    if(!not.length) return null;
+    const bad=not[0];
+    const good=shuffle(fs.filter(x=>x!==n&&x!==1)).slice(0,3);
+    const opts=shuffle(good.concat([bad])).map(v=>({label:String(v), value:v, right:v===bad}));
+    if(opts.length<4) return null;
+    return {tipe:"faktorBukan", q:"Angka berikut yang <b>bukan</b> faktor dari "+n+" adalah ...",
+      opts:opts,
+      why:"Faktor "+n+" adalah "+fs.join(", ")+". Karena "+bad+" tidak ada pada daftar itu ("+n+" &divide; "+bad+" = "+
+        Math.floor(n/bad)+" sisa "+(n%bad)+"), maka "+bad+" bukan faktor."};
+  }
+  if(type==="factPrima"){
+    const n=[36,60,72,84,90,108,120,144][randInt(0,7)];
+    const map=primeMap(n);
+    const correct=n+" = "+powerString(map);
+    const distr=uniq([
+      n+" = "+powerString(map).replace(/2<sup>2<\/sup>/,"2<sup>3</sup>"),
+      n+" = "+Object.keys(map).map(k=>k+"<sup>"+(map[k]+1)+"</sup>").join(" &times; "),
+      n+" = "+primeFactorsFlat(n).join(" &times; ")+" &times; 1",
+      n+" = "+powerString(map).replace(/3<sup>2<\/sup>/,"3<sup>3</sup>")
+    ]).filter(s=>s!==correct&&s.length>0);
+    const list=shuffle([correct].concat(distr)).slice(0,4).map(s=>({label:s, value:s, right:s===correct}));
+    if(list.length<4) return null;
+    return {tipe:"factPrima", q:"Bentuk faktorisasi prima yang benar untuk "+n+" adalah ...",
+      opts:list,
+      why:n+" diuraikan bertahap: "+ladderSteps(n).map(s=>s.dividend+" &divide; "+s.divisor+" = "+s.quotient).join("; ")+
+        ", sehingga "+n+" = "+primeFactorsFlat(n).join(" &times; ")+" = "+powerString(map)+"."};
+  }
+  if(type==="cerita"){
+    const f=randInt(3,9), m=randInt(2,6), p=f*m, q=f*(m+randInt(1,3));
+    if(p>90||q>90) return null;
+    return {tipe:"cerita",
+      q:"Ibu membeli "+p+" kue kering dan "+q+" permen. Keduanya akan dibagikan ke beberapa kantong dengan jumlah setiap jenis barang <b>sama banyak</b> dan <b>tidak bersisa</b>. Kantong paling banyak yang diperlukan adalah ...",
+      opts:optSet(f,[p,q,Math.min(p,q),Math.max(1,f-1),f+1,gcd(p,q)/2]),
+      why:"Banyak kantong paling banyak = FPB("+p+", "+q+") = "+f+". Tiap kantong lalu berisi "+p+"/"+f+" = "+(p/f)+
+        " kue kering dan "+q+"/"+f+" = "+(q/f)+" permen, tanpa sisa."};
+  }
+  if(type==="sifatFpb"){
+    const small=randInt(3,12), k=randInt(3,8), big=small*k;
+    return {tipe:"sifatFpb", q:"Jika bilangan besar adalah kelipatan bilangan kecil (misalnya "+small+" dan "+big+"), maka FPB-nya adalah ...",
+      opts:optSet(small,[big,k,small*big,1]),
+      why:big+" habis dibagi "+small+", sehingga semua faktor "+small+" pasti juga faktor "+big+
+        ". Karena itu FPB("+small+", "+big+") = "+small+", yaitu bilangan yang lebih kecil."};
+  }
+  if(type==="kelompok"){
+    const f=randInt(4,12), a=f*randInt(1,4), b=f*randInt(1,4);
+    if(a===b||a>96||b>96) return null;
+    const fpb=gcd(a,b);
+    return {tipe:"kelompok", q:"Sebanyak "+a+" kelereng merah dan "+b+" kelereng putih dimasukkan ke dalam "+fpb+
+      " kantong identik agar isinya sama banyak. Banyak kelereng merah pada tiap kantong adalah ...",
+      opts:optSet(a/fpb,[a,b/fpb,b,fpb]),
+      why:"Kelereng merah tiap kantong = "+a+" &divide; FPB("+a+", "+b+") = "+a+" &divide; "+fpb+" = "+(a/fpb)+
+        ". Kelereng putih tiap kantong = "+b+" &divide; "+fpb+" = "+(b/fpb)+"."};
+  }
+  if(type==="primaAtau"){
+    const pool=[2,3,5,7,11,13,17,19,23,29];
+    const correct=pool[randInt(0,pool.length-1)];
+    const wrongs=[1,9,15,21,25,27,33,35,39,45];
+    const list=shuffle(wrongs.concat([correct])).filter(v=>v!==correct).slice(0,3).concat([correct])
+      .map(v=>({label:String(v), value:v, right:v===correct}));
+    return {tipe:"primaAtau", q:"Di antara bilangan berikut, yang merupakan bilangan prima adalah ...",
+      opts:shuffle(list),
+      why:"Bilangan prima hanya memiliki dua faktor, yaitu 1 dan dirinya sendiri, sehingga jawabannya "+correct+
+        ". Adapun 1 bukan prima (faktornya cuma satu), sedangkan 9, 15, 21, 25, dan 27 masih bisa dibagi bilangan lain."};
+  }
+  return null;
+}
+function lcm(a,b){ return a/gcd(a,b)*b; }
+
+function startQuiz(){
+  QUIZ.items=makeQuiz(); QUIZ.i=0; QUIZ.score=0; QUIZ.streak=0; QUIZ.answered=[]; QUIZ.started=true;
+  renderQuizHeader(); drawQuestion();
+  $("#quiz-result").innerHTML="";
+}
+function renderQuizHeader(){
+  $("#q-progress").textContent="Soal "+Math.min(QUIZ.i+1,QUIZ.n)+" dari "+QUIZ.n;
+  $("#q-score").textContent="Benar: "+QUIZ.score;
+  $("#q-streak").textContent="Beruntun: "+QUIZ.streak+(QUIZ.best?" (terbaik "+QUIZ.best+")":"");
+  $("#q-meter").style.width=(QUIZ.i/QUIZ.n*100)+"%";
+}
+function drawQuestion(){
+  renderQuizHeader();
+  const stage=$("#quiz-stage");
+  if(QUIZ.i>=QUIZ.items.length){ finishQuiz(); return; }
+  const it=QUIZ.items[QUIZ.i];
+  stage.innerHTML='<div class="qcard"><div class="qnum">Soal '+(QUIZ.i+1)+" &middot; "+
+    (TIPE_LABEL[it.tipe]||"FPB")+'</div><div class="qtext">'+it.q+'</div><div class="opts" id="q-opts"></div>'+
+    '<div class="fb" id="q-fb"></div>'+
+    '<div class="btnrow no-print" id="q-nextrow" style="display:none"><button class="btn" id="q-next">'+
+    (QUIZ.i+1<QUIZ.n?"Lanjut ke Soal Berikutnya":"Lihat Hasil dan Pembahasan")+"</button></div></div>";
+  const box=$("#q-opts");
+  it.opts.forEach((o,i)=>{
+    const b=tag("button","opt");
+    b.type="button";
+    b.innerHTML='<span class="key">'+String.fromCharCode(65+i)+'</span><span class="val">'+o.label+"</span>";
+    b.addEventListener("click",()=>answer(i));
+    box.appendChild(b);
+  });
+  QUIZ.locked=false;
+}
+function answer(idx){
+  if(QUIZ.locked) return;
+  QUIZ.locked=true;
+  const it=QUIZ.items[QUIZ.i];
+  const opts=$$("#q-opts .opt");
+  opts.forEach((b,i)=>{ b.disabled=true; if(it.opts[i].right) b.classList.add("right"); else if(i===idx) b.classList.add("wrong"); });
+  const right=it.opts[idx].right;
+  const fb=$("#q-fb");
+  fb.className="fb show "+(right?"ok":"no");
+  fb.innerHTML='<div class="verdict">'+(right?"Jawaban benar":"Jawaban belum benar")+"</div><p>"+it.why+"</p>";
+  if(right){ QUIZ.score++; QUIZ.streak++; if(QUIZ.streak>QUIZ.best) QUIZ.best=QUIZ.streak; }
+  else QUIZ.streak=0;
+  QUIZ.answered.push({q:it.q, chosen:it.opts[idx].label, right:it.opts.filter(o=>o.right)[0].label, ok:right, why:it.why});
+  renderQuizHeader();
+  $("#q-nextrow").style.display="flex";
+  $("#q-next").addEventListener("click",()=>{ QUIZ.i++; drawQuestion(); });
+  $("#q-next").focus();
+}
+function finishQuiz(){
+  renderQuizHeader();
+  $("#q-meter").style.width="100%";
+  $("#q-progress").textContent="Selesai - "+QUIZ.n+" soal";
+  const pct=Math.round(QUIZ.score/QUIZ.n*100);
+  const grade = pct>=90?["Sangat Baik","Kamu sudah menguasai FPB dan siap ke topik KPK."]
+    : pct>=70?["Baik","Sudah tuntas. Perbanyak latihan soal cerita agar makin lancar."]
+    : pct>=50?["Cukup","Konsep sudah tampak, tetapi langkah memilih faktor terbesar masih sering meleset."]
+    :["Perlu Bimbingan","Ulangi Bab 2 dan Bab 3, gunakan Mesin Faktor setiap hari 10 menit."];
+  const wrong=QUIZ.answered.filter(a=>!a.ok);
+  $("#quiz-stage").innerHTML="";
+  $("#quiz-result").innerHTML=
+    '<div class="final"><div style="color:#9fcbe6;font-size:.75rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase">Hasil Latihan</div>'+
+    '<div class="grade">'+QUIZ.score+" dari "+QUIZ.n+" ("+pct+"%)</div><div style=\"font-weight:800\">"+grade[0]+"</div>"+
+    '<div class="desc">'+grade[1]+"</div></div>"+
+    '<h3 style="margin-top:1.1rem">Pembahasan '+wrong.length+" soal yang perlu diperbaiki</h3>"+
+    (wrong.length
+      ? '<div class="review">'+wrong.map(w=>'<div class="ritem miss"><b>'+w.q+"</b>Pilihanmu: <span class=\"mono\">"+w.chosen+
+        "</span> &middot; Jawaban benar: <span class=\"mono\"><b>"+w.right+"</b></span><br><span class=\"hint\">"+w.why+"</span></div>").join("")+"</div>"
+      : '<div class="callout tip" style="margin-bottom:0"><p style="margin:0">Tidak ada yang perlu diperbaiki. Semua jawaban benar.</p></div>')+
+    '<div class="btnrow no-print" style="margin-top:1rem"><button class="btn" id="q-again">Kerjakan Soal Baru</button>'+
+    '<button class="btn ghost" data-go="7">Lanjut ke Permainan</button></div>';
+  $("#q-again").addEventListener("click",startQuiz);
+  $$("#quiz-result [data-go]").forEach(b=>b.addEventListener("click",()=>go(Number(b.dataset.go))));
+}
+$("#q-restart").addEventListener("click",()=>{ startQuiz(); window.scrollTo({top:0,behavior:"smooth"}); });
+
+/* ============================================================
+   BAB 7 : PERMAINAN KANTONG HADIAH
+   ============================================================ */
+const GAME={round:0, solved:0, log:[], a:0, b:0, pick:0, done:false, started:false};
+function newRound(){
+  GAME.started=true;
+  GAME.round++;
+  const f=randInt(3,9);
+  GAME.a=f*randInt(1,4);
+  GAME.b=f*randInt(1,4);
+  if(GAME.a===GAME.b) GAME.b=f*(Math.max(1,Math.min(4,GAME.a/f))+1);
+  GAME.pick=0; GAME.done=false;
+  renderGame();
+}
+function fpbGame(){ return gcd(GAME.a,GAME.b); }
+function renderGame(){
+  $("#gm-round").textContent="Ronde "+GAME.round;
+  $("#gm-score").textContent="Tuntas: "+GAME.solved;
+  $("#gm-story").innerHTML='<div class="callout def"><span class="tag">Situasi Ronde '+GAME.round+"</span>"+
+    "<p>Kelas 5 akan membuat paket hadiah untuk siswa berprestasi. Tersedia <b>"+GAME.a+" buku tulis</b> dan <b>"+GAME.b+
+    " pensil warna</b>. Semua barang harus masuk ke dalam kantong, dan isi tiap kantong wajib persis sama.</p>"+
+    '<div class="objfield" style="margin-top:.4rem">'+Array(Math.min(GAME.a,40)).fill('<i class="obj"></i>').join("")+"</div>"+
+    '<div class="objfield" style="margin-top:.35rem">'+Array(Math.min(GAME.b,40)).fill('<i class="obj b"></i>').join("")+"</div>"+
+    '<p class="hint" style="margin:.4rem 0 0"> Kotak biru = buku tulis ('+GAME.a+'), lingkaran merah = pensil ('+GAME.b+
+    "). Bila lebih dari 40, hanya 40 yang digambar."+"</p></div>";
+
+  const picks=$("#gm-picks");
+  picks.innerHTML="";
+  for(let k=1;k<=12;k++){
+    const c=tag("span","chip",String(k));
+    c.style.cursor="pointer"; c.setAttribute("role","button"); c.tabIndex=0;
+    c.setAttribute("aria-label","Pilih "+k+" kantong");
+    c.addEventListener("click",()=>{ GAME.pick=k; renderGame(); });
+    c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); GAME.pick=k; renderGame(); } });
+    if(GAME.pick===k) c.classList.add("max");
+    picks.appendChild(c);
+  }
+
+  const bags=$("#gm-bags");
+  bags.innerHTML="";
+  if(!GAME.pick){
+    bags.innerHTML='<div class="callout warn" style="margin:0"><p style="margin:0">Pilih dulu jumlah kantong di sebelah kiri, lalu tekan <b>Bagikan ke Kantong</b>.</p></div>';
+    $("#gm-left").textContent="";
+  }else{
+    const k=GAME.pick, perA=Math.floor(GAME.a/k), perB=Math.floor(GAME.b/k);
+    const restA=GAME.a-perA*k, restB=GAME.b-perB*k;
+    for(let i=0;i<k;i++){
+      const ok = restA===0 && restB===0 && perA>0 && perB>0;
+      const b=tag("div","bag "+(ok?"good":(perA===0||perB===0?"bad":"")));
+      b.style.animationDelay=(i*40)+"ms";
+      b.innerHTML="<h5>Kantong "+(i+1)+"</h5><div class=\"num\">"+perA+" buku &middot; "+perB+" pensil</div>"+
+        '<div class="ruler">'+Array(Math.min(perA,14)).fill("<span></span>").join("")+
+        Array(Math.min(perB,14)).fill('<span class="left"></span>').join("")+"</div>";
+      bags.appendChild(b);
+    }
+    $("#gm-left").textContent = (restA||restB)
+      ? "Masih bersisa: "+restA+" buku, "+restB+" pensil."
+      : "Tidak ada sisa. Setiap kantong berisi "+perA+" buku dan "+perB+" pensil.";
+  }
+
+  $("#gm-hintbox").innerHTML="";
+  if(GAME.done){
+    const f=fpbGame();
+    $("#gm-feedback").innerHTML='<div class="fb ok show"><div class="verdict">Tuntas - FPB('+GAME.a+", "+GAME.b+") = "+f+"</div>"+
+      "<p>Kantong sah dengan jumlah terbanyak adalah "+f+" kantong, masing-masing berisi <b>"+(GAME.a/f)+" buku</b> dan <b>"+(GAME.b/f)+
+      " pensil</b>. Perhatikan pula: FPB("+GAME.a+", "+GAME.b+") = "+f+" juga berarti buku dan pensil bisa dibagi rata ke "+f+" kelompok.</p></div>";
+  }else{
+    $("#gm-feedback").innerHTML="";
+  }
+  renderGameLog();
+}
+function checkGame(){
+  const box=$("#gm-feedback");
+  if(!GAME.pick){
+    box.innerHTML='<div class="fb no show"><div class="verdict">Pilih jumlah kantong lebih dulu</div><p>Klik salah satu angka 1 sampai 12 pada bagian "Pilih jumlah kantong".</p></div>';
+    return;
+  }
+  const k=GAME.pick;
+  const perA=GAME.a/k, perB=GAME.b/k;
+  const valid = Number.isInteger(perA) && Number.isInteger(perB) && perA>0 && perB>0;
+  const f=fpbGame();
+  if(!valid){
+    const restA=GAME.a%k, restB=GAME.b%k;
+    box.innerHTML='<div class="fb no show"><div class="verdict">Belum sah - ada barang tersisa</div><p>Dengan '+k+
+      " kantong, buku bersisa <b>"+restA+"</b> dan pensil bersisa <b>"+restB+
+      "</b>. Berarti "+k+" bukan faktor persekutuan dari "+GAME.a+" dan "+GAME.b+". Coba angka lain yang membagi habis keduanya.</p></div>";
+    GAME.log.push({a:GAME.a,b:GAME.b,k:k,status:"sisa "+(restA+restB)});
+    renderGameLog();
+    return;
+  }
+  if(k<f){
+    box.innerHTML='<div class="fb ok show" style="border-color:#f0c98a;background:var(--warn-bg)"><div class="verdict" style="color:var(--warn)">Sah, tetapi belum yang terbanyak</div><p>'+
+      k+" kantong boleh (tiap kantong berisi "+perA+" buku dan "+perB+" pensil, tanpa sisa), karena "+k+
+      " adalah faktor persekutuan. Namun kamu menargetkan jumlah <b>terbanyak</b>. Coba naikkan terus sampai tersisa barang.</p></div>";
+    GAME.log.push({a:GAME.a,b:GAME.b,k:k,status:"sah, belum max"});
+    renderGameLog();
+    return;
+  }
+  if(k>f){
+    box.innerHTML='<div class="fb ok show" style="border-color:#cfe4f2;background:#f4f9fd"><div class="verdict" style="color:var(--navy)">Menarik - ini bagian soal KPK</div><p>'+
+      k+" kantong justru membuat pembagian tidak habis (sisa "+(GAME.a%k)+" buku, "+(GAME.b%k)+" pensil). Hanya bilangan yang menjadi faktor persekutuan yang boleh dipakai pada soal FPB.</p></div>";
+    GAME.log.push({a:GAME.a,b:GAME.b,k:k,status:"terlalu besar"});
+    renderGameLog();
+    return;
+  }
+  GAME.done=true; GAME.solved++;
+  GAME.log.push({a:GAME.a,b:GAME.b,k:k,status:"maksimum (FPB)"});
+  renderGame();
+}
+function gameHint(){
+  const cf=commonFactors([GAME.a,GAME.b]);
+  $("#gm-hintbox").innerHTML='<div class="callout tip" style="margin-bottom:0"><span class="tag">Petunjuk</span>'+
+    "<p style=\"margin:0\">Faktor "+GAME.a+" = "+factors(GAME.a).join(", ")+". Faktor "+GAME.b+" = "+factors(GAME.b).join(", ")+
+    ". Yang sama: <b>"+cf.join(", ")+"</b>. Jumlah kantong sah yang paling banyak adalah angka terbesarnya, yaitu <b>"+cf[cf.length-1]+"</b>.</p></div>";
+}
+function renderGameLog(){
+  const t=$("#gm-log");
+  if(!GAME.log.length){ t.innerHTML='<tbody><tr><td class="hint" colspan="5">Belum ada percobaan. Pilih jumlah kantong lalu tekan Bagikan.</td></tr></tbody>'; return; }
+  const last=GAME.log.slice(-10);
+  t.innerHTML='<thead><tr><th>Ke-</th><th>Buku</th><th>Pensil</th><th>Kantong dicoba</th><th>Hasilnya</th></tr></thead><tbody>'+
+    last.map((r,i)=>"<tr><td>"+(i+1)+"</td><td>"+r.a+"</td><td>"+r.b+"</td><td>"+r.k+
+      '</td><td class="'+(String(r.status).indexOf("maksimum")>-1?"div":"")+'">'+r.status+"</td></tr>").join("")+"</tbody>";
+}
+$("#gm-check").addEventListener("click",checkGame);
+$("#gm-hint").addEventListener("click",gameHint);
+$("#gm-new").addEventListener("click",newRound);
+
+/* ============================================================
+   BAB 8 : PENILAIAN DIRI + LAPORAN
+   ============================================================ */
+const RATE=[
+  "Saya paham arti faktor suatu bilangan.",
+  "Saya bisa mencari FPB dengan mendaftar faktor.",
+  "Saya bisa mencari FPB dengan faktorisasi prima.",
+  "Saya bisa menyelesaikan soal cerita tentang membagi kelompok."
+];
+const RATE_LABEL=["Belum paham","Paham sebagian","Cukup paham","Sangat paham"];
+const state={rate:[null,null,null,null]};
+(function buildRate(){
+  const box=$("#selfrate");
+  RATE.forEach((txt,i)=>{
+    const row=tag("div","rateitem");
+    row.innerHTML="<p>"+txt+"</p>";
+    const r=tag("div","rate no-print");
+    RATE_LABEL.forEach((lab,j)=>{
+      const b=tag("button",null,lab);
+      b.type="button"; b.setAttribute("aria-pressed","false");
+      b.addEventListener("click",()=>{
+        state.rate[i]=j;
+        $$("button",r).forEach((x,xi)=>x.setAttribute("aria-pressed", xi===j?"true":"false"));
+        renderScore();
+      });
+      r.appendChild(b);
+    });
+    row.appendChild(r);
+    box.appendChild(row);
+  });
+})();
+function renderScore(){
+  const filled=state.rate.filter(v=>v!==null);
+  const sum=filled.reduce((a,b)=>a+b,0);
+  const pct=Math.round(sum/(RATE.length*3)*100);
+  $("#sr-score").textContent=pct+"%";
+  $("#sr-msg").textContent = filled.length===0
+    ? "Isi penilaian diri di atas untuk melihat ringkasan."
+    : filled.length<RATE.length
+      ? "Baru "+filled.length+" dari "+RATE.length+" pernyataan diisi, sehingga skor masih rendah. Lengkapi semuanya."
+      : (pct>=75?"Keyakinan dirimu tinggi. Ajak temanmu berdiskusi dan cobalah menjadi tutor sebaya."
+        : pct>=50?"Keyakinan cukup. Perkuat lagi cara faktorisasi prima pada Bab 4."
+        :"Belum yakin tidak apa-apa. Ulangi Bab 2 dan Bab 3 dengan Mesin Faktor, lalu kerjakan latihan sekali lagi.");
+}
+function renderReport(){
+  const pct=QUIZ.started? Math.round(QUIZ.score/QUIZ.n*100):null;
+  const rows=[
+    ["Bab dibuka", doneSet.size+" dari "+CHAPTERS.length+" bab"],
+    ["Latihan soal", QUIZ.started? QUIZ.score+"/"+QUIZ.n+" benar ("+pct+"%)" : "belum dikerjakan"],
+    ["Status tuntas", QUIZ.started? (pct>=70?"<b style=\"color:var(--ok)\">TUNTAS</b>":"<b style=\"color:var(--bad)\">BELUM TUNTAS (butuh 70)</b>") : "-"],
+    ["Permainan", GAME.started? GAME.solved+" ronde diselesaikan dengan FPB optimum" : "belum dimainkan"],
+    ["Streak terbaik", QUIZ.started? (QUIZ.best+" soal beruntun") : "-"]
+  ];
+  $("#report").innerHTML='<div class="tablewrap"><table class="math" style="font-family:var(--sans)"><tbody>'+
+    rows.map(r=>"<tr><th style=\"text-align:left;width:46%\">"+r[0]+"</th><td style=\"text-align:left\">"+r[1]+"</td></tr>").join("")+
+    "</tbody></table></div>"+
+    '<p class="hint" style="margin-top:.6rem">Catatan: progres disimpan hanya selama halaman terbuka. Menutup tab akan mengatur ulang modul.</p>';
+}
+$("#report-reset").addEventListener("click",()=>{
+  QUIZ.started=false; QUIZ.score=0; QUIZ.i=0; QUIZ.items=[]; QUIZ.answered=[]; QUIZ.streak=0; QUIZ.best=0;
+  GAME.round=0; GAME.solved=0; GAME.log=[]; GAME.started=false; GAME.done=false;
+  state.rate=[null,null,null,null]; $$("#selfrate .rate button").forEach(b=>b.setAttribute("aria-pressed","false"));
+  doneSet.clear(); renderScore();
+  $("#quiz-stage").innerHTML='<div class="callout" style="margin-bottom:0"><p style="margin:0">Kuis siap diulang. Buka Bab 6 untuk memulai paket soal baru.</p></div>';
+  $("#quiz-result").innerHTML="";
+  go(1);
+});
+
+/* ============================================================
+   NAVIGASI BAWAH (SEBELUMNYA / LANJUT)
+   ============================================================ */
+function buildPagers(){
+  CHAPTERS.forEach((sec,i)=>{
+    const prev=CHAPTERS[i-1], next=CHAPTERS[i+1];
+    const bar=tag("div","navfoot no-print");
+    bar.innerHTML=
+      (prev? '<button class="btn ghost" data-go="'+i+'">&laquo; '+prev.dataset.nav+"</button>":"<span></span>")+
+      '<span class="hint">Bab '+(i+1)+" dari "+CHAPTERS.length+" - "+sec.dataset.title+"</span>"+
+      (next? '<button class="btn" data-go="'+(i+2)+'">Lanjut: '+next.dataset.nav+" &raquo;</button>":'<button class="btn amber" data-go="1">Kembali ke Beranda</button>');
+    sec.appendChild(bar);
+    $$("[data-go]",bar).forEach(b=>b.addEventListener("click",()=>go(Number(b.dataset.go))));
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function init(){
+  buildPagers();
+  renderMesinFaktor();
+  renderCommon();
+  renderPrime();
+  renderLab();
+  renderScore();
+  startQuiz();
+  newRound();
+  go(1);
+}
+init();
+</script>
+</body>
+</html>
